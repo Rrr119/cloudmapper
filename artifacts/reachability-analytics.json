@@ -1,0 +1,682 @@
+{
+  "account": "analytics",
+  "findings": [
+    {
+      "account": "analytics",
+      "confidence": "verified",
+      "hop_count": 2,
+      "hops": [
+        {
+          "from_port": 22,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 22,
+              "port": "22/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-an-jump",
+              "sg_name": "analytics-jump",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 22,
+              "verified": true
+            }
+          ],
+          "port": "22/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-an-jump",
+          "security_group_name": "analytics-jump",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "jump",
+          "to_port": 22,
+          "verified": true
+        },
+        {
+          "from_port": 5439,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 5439,
+              "port": "5439/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-an-rs",
+              "sg_name": "analytics-redshift",
+              "source_kind": "security-group",
+              "source_value": "sg-an-jump",
+              "to_port": 5439,
+              "verified": true
+            },
+            {
+              "from_port": 5439,
+              "port": "5439/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-an-rs",
+              "sg_name": "analytics-redshift",
+              "source_kind": "cidr",
+              "source_value": "10.10.0.0/16",
+              "to_port": 5439,
+              "verified": true
+            }
+          ],
+          "port": "5439/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-an-rs",
+          "security_group_name": "analytics-redshift",
+          "source": "jump",
+          "source_kind": "security-group",
+          "source_value": "sg-an-jump",
+          "target": "rs-bi",
+          "to_port": 5439,
+          "verified": true
+        }
+      ],
+      "id": "path-001",
+      "node_count": 3,
+      "nodes": [
+        "0.0.0.0/0",
+        "jump",
+        "rs-bi"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "jump",
+        "rs-bi"
+      ],
+      "ports": [
+        "22/tcp",
+        "5439/tcp"
+      ],
+      "risk": "high",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "rs-bi",
+      "target_name": "analytics-bi-redshift",
+      "target_type": "redshift"
+    },
+    {
+      "account": "analytics",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 22,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 22,
+              "port": "22/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-an-jump",
+              "sg_name": "analytics-jump",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 22,
+              "verified": true
+            }
+          ],
+          "port": "22/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-an-jump",
+          "security_group_name": "analytics-jump",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "jump",
+          "to_port": 22,
+          "verified": true
+        },
+        {
+          "from_port": 22,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 22,
+              "port": "22/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-an-worker",
+              "sg_name": "analytics-worker",
+              "source_kind": "security-group",
+              "source_value": "sg-an-jump",
+              "to_port": 22,
+              "verified": true
+            }
+          ],
+          "port": "22/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-an-worker",
+          "security_group_name": "analytics-worker",
+          "source": "jump",
+          "source_kind": "security-group",
+          "source_value": "sg-an-jump",
+          "target": "worker",
+          "to_port": 22,
+          "verified": true
+        },
+        {
+          "from_port": 5439,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5439,
+              "port": "5439/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-an-rs",
+              "sg_name": "analytics-redshift",
+              "source_kind": "cidr",
+              "source_value": "10.10.0.0/16",
+              "to_port": 5439,
+              "verified": true
+            }
+          ],
+          "port": "5439/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-an-rs",
+          "security_group_name": "analytics-redshift",
+          "source": "worker",
+          "source_kind": "cidr",
+          "source_value": "10.10.0.0/16",
+          "target": "rs-bi",
+          "to_port": 5439,
+          "verified": true
+        }
+      ],
+      "id": "path-002",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "jump",
+        "worker",
+        "rs-bi"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "jump",
+        "worker",
+        "rs-bi"
+      ],
+      "ports": [
+        "22/tcp",
+        "5439/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "rs-bi",
+      "target_name": "analytics-bi-redshift",
+      "target_type": "redshift"
+    }
+  ],
+  "options": {
+    "max_hops": 6,
+    "port": null,
+    "protocol": null,
+    "sensitive_only": true
+  },
+  "path_keys": [
+    [
+      "0.0.0.0/0",
+      "jump",
+      "rs-bi"
+    ],
+    [
+      "0.0.0.0/0",
+      "jump",
+      "worker",
+      "rs-bi"
+    ]
+  ],
+  "paths": [
+    {
+      "account": "analytics",
+      "confidence": "verified",
+      "hop_count": 2,
+      "hops": [
+        {
+          "from_port": 22,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 22,
+              "port": "22/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-an-jump",
+              "sg_name": "analytics-jump",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 22,
+              "verified": true
+            }
+          ],
+          "port": "22/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-an-jump",
+          "security_group_name": "analytics-jump",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "jump",
+          "to_port": 22,
+          "verified": true
+        },
+        {
+          "from_port": 5439,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 5439,
+              "port": "5439/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-an-rs",
+              "sg_name": "analytics-redshift",
+              "source_kind": "security-group",
+              "source_value": "sg-an-jump",
+              "to_port": 5439,
+              "verified": true
+            },
+            {
+              "from_port": 5439,
+              "port": "5439/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-an-rs",
+              "sg_name": "analytics-redshift",
+              "source_kind": "cidr",
+              "source_value": "10.10.0.0/16",
+              "to_port": 5439,
+              "verified": true
+            }
+          ],
+          "port": "5439/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-an-rs",
+          "security_group_name": "analytics-redshift",
+          "source": "jump",
+          "source_kind": "security-group",
+          "source_value": "sg-an-jump",
+          "target": "rs-bi",
+          "to_port": 5439,
+          "verified": true
+        }
+      ],
+      "id": "path-001",
+      "node_count": 3,
+      "nodes": [
+        "0.0.0.0/0",
+        "jump",
+        "rs-bi"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "jump",
+        "rs-bi"
+      ],
+      "ports": [
+        "22/tcp",
+        "5439/tcp"
+      ],
+      "risk": "high",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "rs-bi",
+      "target_name": "analytics-bi-redshift",
+      "target_type": "redshift"
+    },
+    {
+      "account": "analytics",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 22,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 22,
+              "port": "22/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-an-jump",
+              "sg_name": "analytics-jump",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 22,
+              "verified": true
+            }
+          ],
+          "port": "22/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-an-jump",
+          "security_group_name": "analytics-jump",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "jump",
+          "to_port": 22,
+          "verified": true
+        },
+        {
+          "from_port": 22,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 22,
+              "port": "22/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-an-worker",
+              "sg_name": "analytics-worker",
+              "source_kind": "security-group",
+              "source_value": "sg-an-jump",
+              "to_port": 22,
+              "verified": true
+            }
+          ],
+          "port": "22/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-an-worker",
+          "security_group_name": "analytics-worker",
+          "source": "jump",
+          "source_kind": "security-group",
+          "source_value": "sg-an-jump",
+          "target": "worker",
+          "to_port": 22,
+          "verified": true
+        },
+        {
+          "from_port": 5439,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5439,
+              "port": "5439/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-an-rs",
+              "sg_name": "analytics-redshift",
+              "source_kind": "cidr",
+              "source_value": "10.10.0.0/16",
+              "to_port": 5439,
+              "verified": true
+            }
+          ],
+          "port": "5439/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-an-rs",
+          "security_group_name": "analytics-redshift",
+          "source": "worker",
+          "source_kind": "cidr",
+          "source_value": "10.10.0.0/16",
+          "target": "rs-bi",
+          "to_port": 5439,
+          "verified": true
+        }
+      ],
+      "id": "path-002",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "jump",
+        "worker",
+        "rs-bi"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "jump",
+        "worker",
+        "rs-bi"
+      ],
+      "ports": [
+        "22/tcp",
+        "5439/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "rs-bi",
+      "target_name": "analytics-bi-redshift",
+      "target_type": "redshift"
+    }
+  ],
+  "reachable_paths": [
+    {
+      "account": "analytics",
+      "confidence": "verified",
+      "hop_count": 2,
+      "hops": [
+        {
+          "from_port": 22,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 22,
+              "port": "22/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-an-jump",
+              "sg_name": "analytics-jump",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 22,
+              "verified": true
+            }
+          ],
+          "port": "22/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-an-jump",
+          "security_group_name": "analytics-jump",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "jump",
+          "to_port": 22,
+          "verified": true
+        },
+        {
+          "from_port": 5439,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 5439,
+              "port": "5439/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-an-rs",
+              "sg_name": "analytics-redshift",
+              "source_kind": "security-group",
+              "source_value": "sg-an-jump",
+              "to_port": 5439,
+              "verified": true
+            },
+            {
+              "from_port": 5439,
+              "port": "5439/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-an-rs",
+              "sg_name": "analytics-redshift",
+              "source_kind": "cidr",
+              "source_value": "10.10.0.0/16",
+              "to_port": 5439,
+              "verified": true
+            }
+          ],
+          "port": "5439/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-an-rs",
+          "security_group_name": "analytics-redshift",
+          "source": "jump",
+          "source_kind": "security-group",
+          "source_value": "sg-an-jump",
+          "target": "rs-bi",
+          "to_port": 5439,
+          "verified": true
+        }
+      ],
+      "id": "path-001",
+      "node_count": 3,
+      "nodes": [
+        "0.0.0.0/0",
+        "jump",
+        "rs-bi"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "jump",
+        "rs-bi"
+      ],
+      "ports": [
+        "22/tcp",
+        "5439/tcp"
+      ],
+      "risk": "high",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "rs-bi",
+      "target_name": "analytics-bi-redshift",
+      "target_type": "redshift"
+    },
+    {
+      "account": "analytics",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 22,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 22,
+              "port": "22/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-an-jump",
+              "sg_name": "analytics-jump",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 22,
+              "verified": true
+            }
+          ],
+          "port": "22/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-an-jump",
+          "security_group_name": "analytics-jump",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "jump",
+          "to_port": 22,
+          "verified": true
+        },
+        {
+          "from_port": 22,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 22,
+              "port": "22/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-an-worker",
+              "sg_name": "analytics-worker",
+              "source_kind": "security-group",
+              "source_value": "sg-an-jump",
+              "to_port": 22,
+              "verified": true
+            }
+          ],
+          "port": "22/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-an-worker",
+          "security_group_name": "analytics-worker",
+          "source": "jump",
+          "source_kind": "security-group",
+          "source_value": "sg-an-jump",
+          "target": "worker",
+          "to_port": 22,
+          "verified": true
+        },
+        {
+          "from_port": 5439,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5439,
+              "port": "5439/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-an-rs",
+              "sg_name": "analytics-redshift",
+              "source_kind": "cidr",
+              "source_value": "10.10.0.0/16",
+              "to_port": 5439,
+              "verified": true
+            }
+          ],
+          "port": "5439/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-an-rs",
+          "security_group_name": "analytics-redshift",
+          "source": "worker",
+          "source_kind": "cidr",
+          "source_value": "10.10.0.0/16",
+          "target": "rs-bi",
+          "to_port": 5439,
+          "verified": true
+        }
+      ],
+      "id": "path-002",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "jump",
+        "worker",
+        "rs-bi"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "jump",
+        "worker",
+        "rs-bi"
+      ],
+      "ports": [
+        "22/tcp",
+        "5439/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "rs-bi",
+      "target_name": "analytics-bi-redshift",
+      "target_type": "redshift"
+    }
+  ],
+  "reachable_resources": [
+    "rs-bi"
+  ],
+  "schema": "cloudmapper.reachability/v1",
+  "sensitive_resources": [
+    {
+      "id": "db-locked",
+      "internet_reachable": false,
+      "name": "analytics-locked-rds",
+      "sensitive": true,
+      "type": "rds"
+    },
+    {
+      "id": "rs-bi",
+      "internet_reachable": false,
+      "name": "analytics-bi-redshift",
+      "sensitive": true,
+      "type": "redshift"
+    }
+  ],
+  "source": "0.0.0.0/0",
+  "summary": {
+    "edges": 5,
+    "nodes": 5,
+    "paths": 2,
+    "reachable_sensitive_resources": 1,
+    "security_groups": 0,
+    "sensitive_resources": 2,
+    "verified_paths": 2
+  }
+}

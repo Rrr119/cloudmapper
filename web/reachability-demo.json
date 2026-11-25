@@ -1,0 +1,2657 @@
+{
+  "accounts": [
+    {
+      "graph": [
+        {
+          "data": {
+            "id": "bastion",
+            "local_id": "bastion",
+            "name": "shop-bastion",
+            "node_data": {
+              "InstanceId": "bastion",
+              "PrivateIpAddress": "10.1.1.10",
+              "PublicIpAddress": "54.1.1.1",
+              "SecurityGroups": [
+                {
+                  "GroupId": "sg-shop-bastion"
+                }
+              ],
+              "Tags": [
+                {
+                  "Key": "Name",
+                  "Value": "shop-bastion"
+                }
+              ]
+            },
+            "type": "ec2"
+          }
+        },
+        {
+          "data": {
+            "id": "web",
+            "local_id": "web",
+            "name": "shop-web",
+            "node_data": {
+              "InstanceId": "web",
+              "PrivateIpAddress": "10.1.2.20",
+              "PublicIpAddress": "54.1.1.2",
+              "SecurityGroups": [
+                {
+                  "GroupId": "sg-shop-web"
+                }
+              ],
+              "Tags": [
+                {
+                  "Key": "Name",
+                  "Value": "shop-web"
+                }
+              ]
+            },
+            "type": "ec2"
+          }
+        },
+        {
+          "data": {
+            "id": "app",
+            "local_id": "app",
+            "name": "shop-app",
+            "node_data": {
+              "InstanceId": "app",
+              "PrivateIpAddress": "10.1.3.30",
+              "SecurityGroups": [
+                {
+                  "GroupId": "sg-shop-app"
+                }
+              ],
+              "Tags": [
+                {
+                  "Key": "Name",
+                  "Value": "shop-app"
+                }
+              ]
+            },
+            "type": "ec2"
+          }
+        },
+        {
+          "data": {
+            "id": "db-orders",
+            "local_id": "db-orders",
+            "name": "shop-db-orders",
+            "node_data": {
+              "DBInstanceIdentifier": "db-orders",
+              "PubliclyAccessible": false,
+              "VpcSecurityGroups": [
+                {
+                  "VpcSecurityGroupId": "sg-shop-db"
+                }
+              ]
+            },
+            "type": "rds"
+          }
+        },
+        {
+          "data": {
+            "node_data": [
+              {
+                "GroupId": "sg-shop-bastion",
+                "GroupName": "shop-bastion",
+                "IpPermissions": [
+                  {
+                    "FromPort": 22,
+                    "IpProtocol": "tcp",
+                    "IpRanges": [
+                      {
+                        "CidrIp": "0.0.0.0/0"
+                      }
+                    ],
+                    "ToPort": 22
+                  }
+                ]
+              }
+            ],
+            "source": "0.0.0.0/0",
+            "target": "bastion",
+            "type": "edge"
+          }
+        },
+        {
+          "data": {
+            "node_data": [
+              {
+                "GroupId": "sg-shop-web",
+                "GroupName": "shop-web",
+                "IpPermissions": [
+                  {
+                    "FromPort": 443,
+                    "IpProtocol": "tcp",
+                    "IpRanges": [
+                      {
+                        "CidrIp": "0.0.0.0/0"
+                      }
+                    ],
+                    "ToPort": 443
+                  }
+                ]
+              }
+            ],
+            "source": "0.0.0.0/0",
+            "target": "web",
+            "type": "edge"
+          }
+        },
+        {
+          "data": {
+            "node_data": [
+              {
+                "GroupId": "sg-shop-db",
+                "GroupName": "shop-db",
+                "IpPermissions": [
+                  {
+                    "FromPort": 5432,
+                    "IpProtocol": "tcp",
+                    "ToPort": 5432,
+                    "UserIdGroupPairs": [
+                      {
+                        "GroupId": "sg-shop-app"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "source": "app",
+            "target": "db-orders",
+            "type": "edge"
+          }
+        },
+        {
+          "data": {
+            "node_data": [
+              {
+                "GroupId": "sg-shop-app",
+                "GroupName": "shop-app",
+                "IpPermissions": [
+                  {
+                    "FromPort": 8080,
+                    "IpProtocol": "tcp",
+                    "ToPort": 8080,
+                    "UserIdGroupPairs": [
+                      {
+                        "GroupId": "sg-shop-web"
+                      }
+                    ]
+                  },
+                  {
+                    "FromPort": 22,
+                    "IpProtocol": "tcp",
+                    "ToPort": 22,
+                    "UserIdGroupPairs": [
+                      {
+                        "GroupId": "sg-shop-bastion"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "source": "bastion",
+            "target": "app",
+            "type": "edge"
+          }
+        },
+        {
+          "data": {
+            "node_data": [
+              {
+                "GroupId": "sg-shop-app",
+                "GroupName": "shop-app",
+                "IpPermissions": [
+                  {
+                    "FromPort": 8080,
+                    "IpProtocol": "tcp",
+                    "ToPort": 8080,
+                    "UserIdGroupPairs": [
+                      {
+                        "GroupId": "sg-shop-web"
+                      }
+                    ]
+                  },
+                  {
+                    "FromPort": 22,
+                    "IpProtocol": "tcp",
+                    "ToPort": 22,
+                    "UserIdGroupPairs": [
+                      {
+                        "GroupId": "sg-shop-bastion"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "source": "web",
+            "target": "app",
+            "type": "edge"
+          }
+        }
+      ],
+      "name": "shop",
+      "report": {
+        "account": "shop",
+        "findings": [
+          {
+            "account": "shop",
+            "confidence": "verified",
+            "hop_count": 3,
+            "hops": [
+              {
+                "from_port": 22,
+                "hop": 1,
+                "openings": [
+                  {
+                    "from_port": 22,
+                    "port": "22/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-shop-bastion",
+                    "sg_name": "shop-bastion",
+                    "source_kind": "cidr",
+                    "source_value": "0.0.0.0/0",
+                    "to_port": 22,
+                    "verified": true
+                  }
+                ],
+                "port": "22/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-shop-bastion",
+                "security_group_name": "shop-bastion",
+                "source": "0.0.0.0/0",
+                "source_kind": "cidr",
+                "source_value": "0.0.0.0/0",
+                "target": "bastion",
+                "to_port": 22,
+                "verified": true
+              },
+              {
+                "from_port": 22,
+                "hop": 2,
+                "openings": [
+                  {
+                    "from_port": 22,
+                    "port": "22/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-shop-app",
+                    "sg_name": "shop-app",
+                    "source_kind": "security-group",
+                    "source_value": "sg-shop-bastion",
+                    "to_port": 22,
+                    "verified": true
+                  }
+                ],
+                "port": "22/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-shop-app",
+                "security_group_name": "shop-app",
+                "source": "bastion",
+                "source_kind": "security-group",
+                "source_value": "sg-shop-bastion",
+                "target": "app",
+                "to_port": 22,
+                "verified": true
+              },
+              {
+                "from_port": 5432,
+                "hop": 3,
+                "openings": [
+                  {
+                    "from_port": 5432,
+                    "port": "5432/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-shop-db",
+                    "sg_name": "shop-db",
+                    "source_kind": "security-group",
+                    "source_value": "sg-shop-app",
+                    "to_port": 5432,
+                    "verified": true
+                  }
+                ],
+                "port": "5432/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-shop-db",
+                "security_group_name": "shop-db",
+                "source": "app",
+                "source_kind": "security-group",
+                "source_value": "sg-shop-app",
+                "target": "db-orders",
+                "to_port": 5432,
+                "verified": true
+              }
+            ],
+            "id": "path-001",
+            "node_count": 4,
+            "nodes": [
+              "0.0.0.0/0",
+              "bastion",
+              "app",
+              "db-orders"
+            ],
+            "path": [
+              "0.0.0.0/0",
+              "bastion",
+              "app",
+              "db-orders"
+            ],
+            "ports": [
+              "22/tcp",
+              "5432/tcp"
+            ],
+            "risk": "medium",
+            "rule_verified": true,
+            "sensitive": true,
+            "source": "0.0.0.0/0",
+            "target": "db-orders",
+            "target_name": "shop-db-orders",
+            "target_type": "rds"
+          },
+          {
+            "account": "shop",
+            "confidence": "verified",
+            "hop_count": 3,
+            "hops": [
+              {
+                "from_port": 443,
+                "hop": 1,
+                "openings": [
+                  {
+                    "from_port": 443,
+                    "port": "443/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-shop-web",
+                    "sg_name": "shop-web",
+                    "source_kind": "cidr",
+                    "source_value": "0.0.0.0/0",
+                    "to_port": 443,
+                    "verified": true
+                  }
+                ],
+                "port": "443/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-shop-web",
+                "security_group_name": "shop-web",
+                "source": "0.0.0.0/0",
+                "source_kind": "cidr",
+                "source_value": "0.0.0.0/0",
+                "target": "web",
+                "to_port": 443,
+                "verified": true
+              },
+              {
+                "from_port": 8080,
+                "hop": 2,
+                "openings": [
+                  {
+                    "from_port": 8080,
+                    "port": "8080/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-shop-app",
+                    "sg_name": "shop-app",
+                    "source_kind": "security-group",
+                    "source_value": "sg-shop-web",
+                    "to_port": 8080,
+                    "verified": true
+                  }
+                ],
+                "port": "8080/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-shop-app",
+                "security_group_name": "shop-app",
+                "source": "web",
+                "source_kind": "security-group",
+                "source_value": "sg-shop-web",
+                "target": "app",
+                "to_port": 8080,
+                "verified": true
+              },
+              {
+                "from_port": 5432,
+                "hop": 3,
+                "openings": [
+                  {
+                    "from_port": 5432,
+                    "port": "5432/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-shop-db",
+                    "sg_name": "shop-db",
+                    "source_kind": "security-group",
+                    "source_value": "sg-shop-app",
+                    "to_port": 5432,
+                    "verified": true
+                  }
+                ],
+                "port": "5432/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-shop-db",
+                "security_group_name": "shop-db",
+                "source": "app",
+                "source_kind": "security-group",
+                "source_value": "sg-shop-app",
+                "target": "db-orders",
+                "to_port": 5432,
+                "verified": true
+              }
+            ],
+            "id": "path-002",
+            "node_count": 4,
+            "nodes": [
+              "0.0.0.0/0",
+              "web",
+              "app",
+              "db-orders"
+            ],
+            "path": [
+              "0.0.0.0/0",
+              "web",
+              "app",
+              "db-orders"
+            ],
+            "ports": [
+              "443/tcp",
+              "5432/tcp",
+              "8080/tcp"
+            ],
+            "risk": "medium",
+            "rule_verified": true,
+            "sensitive": true,
+            "source": "0.0.0.0/0",
+            "target": "db-orders",
+            "target_name": "shop-db-orders",
+            "target_type": "rds"
+          }
+        ],
+        "options": {
+          "max_hops": 6,
+          "port": null,
+          "protocol": null,
+          "sensitive_only": true
+        },
+        "path_keys": [
+          [
+            "0.0.0.0/0",
+            "bastion",
+            "app",
+            "db-orders"
+          ],
+          [
+            "0.0.0.0/0",
+            "web",
+            "app",
+            "db-orders"
+          ]
+        ],
+        "paths": [
+          {
+            "account": "shop",
+            "confidence": "verified",
+            "hop_count": 3,
+            "hops": [
+              {
+                "from_port": 22,
+                "hop": 1,
+                "openings": [
+                  {
+                    "from_port": 22,
+                    "port": "22/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-shop-bastion",
+                    "sg_name": "shop-bastion",
+                    "source_kind": "cidr",
+                    "source_value": "0.0.0.0/0",
+                    "to_port": 22,
+                    "verified": true
+                  }
+                ],
+                "port": "22/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-shop-bastion",
+                "security_group_name": "shop-bastion",
+                "source": "0.0.0.0/0",
+                "source_kind": "cidr",
+                "source_value": "0.0.0.0/0",
+                "target": "bastion",
+                "to_port": 22,
+                "verified": true
+              },
+              {
+                "from_port": 22,
+                "hop": 2,
+                "openings": [
+                  {
+                    "from_port": 22,
+                    "port": "22/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-shop-app",
+                    "sg_name": "shop-app",
+                    "source_kind": "security-group",
+                    "source_value": "sg-shop-bastion",
+                    "to_port": 22,
+                    "verified": true
+                  }
+                ],
+                "port": "22/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-shop-app",
+                "security_group_name": "shop-app",
+                "source": "bastion",
+                "source_kind": "security-group",
+                "source_value": "sg-shop-bastion",
+                "target": "app",
+                "to_port": 22,
+                "verified": true
+              },
+              {
+                "from_port": 5432,
+                "hop": 3,
+                "openings": [
+                  {
+                    "from_port": 5432,
+                    "port": "5432/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-shop-db",
+                    "sg_name": "shop-db",
+                    "source_kind": "security-group",
+                    "source_value": "sg-shop-app",
+                    "to_port": 5432,
+                    "verified": true
+                  }
+                ],
+                "port": "5432/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-shop-db",
+                "security_group_name": "shop-db",
+                "source": "app",
+                "source_kind": "security-group",
+                "source_value": "sg-shop-app",
+                "target": "db-orders",
+                "to_port": 5432,
+                "verified": true
+              }
+            ],
+            "id": "path-001",
+            "node_count": 4,
+            "nodes": [
+              "0.0.0.0/0",
+              "bastion",
+              "app",
+              "db-orders"
+            ],
+            "path": [
+              "0.0.0.0/0",
+              "bastion",
+              "app",
+              "db-orders"
+            ],
+            "ports": [
+              "22/tcp",
+              "5432/tcp"
+            ],
+            "risk": "medium",
+            "rule_verified": true,
+            "sensitive": true,
+            "source": "0.0.0.0/0",
+            "target": "db-orders",
+            "target_name": "shop-db-orders",
+            "target_type": "rds"
+          },
+          {
+            "account": "shop",
+            "confidence": "verified",
+            "hop_count": 3,
+            "hops": [
+              {
+                "from_port": 443,
+                "hop": 1,
+                "openings": [
+                  {
+                    "from_port": 443,
+                    "port": "443/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-shop-web",
+                    "sg_name": "shop-web",
+                    "source_kind": "cidr",
+                    "source_value": "0.0.0.0/0",
+                    "to_port": 443,
+                    "verified": true
+                  }
+                ],
+                "port": "443/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-shop-web",
+                "security_group_name": "shop-web",
+                "source": "0.0.0.0/0",
+                "source_kind": "cidr",
+                "source_value": "0.0.0.0/0",
+                "target": "web",
+                "to_port": 443,
+                "verified": true
+              },
+              {
+                "from_port": 8080,
+                "hop": 2,
+                "openings": [
+                  {
+                    "from_port": 8080,
+                    "port": "8080/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-shop-app",
+                    "sg_name": "shop-app",
+                    "source_kind": "security-group",
+                    "source_value": "sg-shop-web",
+                    "to_port": 8080,
+                    "verified": true
+                  }
+                ],
+                "port": "8080/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-shop-app",
+                "security_group_name": "shop-app",
+                "source": "web",
+                "source_kind": "security-group",
+                "source_value": "sg-shop-web",
+                "target": "app",
+                "to_port": 8080,
+                "verified": true
+              },
+              {
+                "from_port": 5432,
+                "hop": 3,
+                "openings": [
+                  {
+                    "from_port": 5432,
+                    "port": "5432/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-shop-db",
+                    "sg_name": "shop-db",
+                    "source_kind": "security-group",
+                    "source_value": "sg-shop-app",
+                    "to_port": 5432,
+                    "verified": true
+                  }
+                ],
+                "port": "5432/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-shop-db",
+                "security_group_name": "shop-db",
+                "source": "app",
+                "source_kind": "security-group",
+                "source_value": "sg-shop-app",
+                "target": "db-orders",
+                "to_port": 5432,
+                "verified": true
+              }
+            ],
+            "id": "path-002",
+            "node_count": 4,
+            "nodes": [
+              "0.0.0.0/0",
+              "web",
+              "app",
+              "db-orders"
+            ],
+            "path": [
+              "0.0.0.0/0",
+              "web",
+              "app",
+              "db-orders"
+            ],
+            "ports": [
+              "443/tcp",
+              "5432/tcp",
+              "8080/tcp"
+            ],
+            "risk": "medium",
+            "rule_verified": true,
+            "sensitive": true,
+            "source": "0.0.0.0/0",
+            "target": "db-orders",
+            "target_name": "shop-db-orders",
+            "target_type": "rds"
+          }
+        ],
+        "reachable_paths": [
+          {
+            "account": "shop",
+            "confidence": "verified",
+            "hop_count": 3,
+            "hops": [
+              {
+                "from_port": 22,
+                "hop": 1,
+                "openings": [
+                  {
+                    "from_port": 22,
+                    "port": "22/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-shop-bastion",
+                    "sg_name": "shop-bastion",
+                    "source_kind": "cidr",
+                    "source_value": "0.0.0.0/0",
+                    "to_port": 22,
+                    "verified": true
+                  }
+                ],
+                "port": "22/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-shop-bastion",
+                "security_group_name": "shop-bastion",
+                "source": "0.0.0.0/0",
+                "source_kind": "cidr",
+                "source_value": "0.0.0.0/0",
+                "target": "bastion",
+                "to_port": 22,
+                "verified": true
+              },
+              {
+                "from_port": 22,
+                "hop": 2,
+                "openings": [
+                  {
+                    "from_port": 22,
+                    "port": "22/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-shop-app",
+                    "sg_name": "shop-app",
+                    "source_kind": "security-group",
+                    "source_value": "sg-shop-bastion",
+                    "to_port": 22,
+                    "verified": true
+                  }
+                ],
+                "port": "22/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-shop-app",
+                "security_group_name": "shop-app",
+                "source": "bastion",
+                "source_kind": "security-group",
+                "source_value": "sg-shop-bastion",
+                "target": "app",
+                "to_port": 22,
+                "verified": true
+              },
+              {
+                "from_port": 5432,
+                "hop": 3,
+                "openings": [
+                  {
+                    "from_port": 5432,
+                    "port": "5432/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-shop-db",
+                    "sg_name": "shop-db",
+                    "source_kind": "security-group",
+                    "source_value": "sg-shop-app",
+                    "to_port": 5432,
+                    "verified": true
+                  }
+                ],
+                "port": "5432/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-shop-db",
+                "security_group_name": "shop-db",
+                "source": "app",
+                "source_kind": "security-group",
+                "source_value": "sg-shop-app",
+                "target": "db-orders",
+                "to_port": 5432,
+                "verified": true
+              }
+            ],
+            "id": "path-001",
+            "node_count": 4,
+            "nodes": [
+              "0.0.0.0/0",
+              "bastion",
+              "app",
+              "db-orders"
+            ],
+            "path": [
+              "0.0.0.0/0",
+              "bastion",
+              "app",
+              "db-orders"
+            ],
+            "ports": [
+              "22/tcp",
+              "5432/tcp"
+            ],
+            "risk": "medium",
+            "rule_verified": true,
+            "sensitive": true,
+            "source": "0.0.0.0/0",
+            "target": "db-orders",
+            "target_name": "shop-db-orders",
+            "target_type": "rds"
+          },
+          {
+            "account": "shop",
+            "confidence": "verified",
+            "hop_count": 3,
+            "hops": [
+              {
+                "from_port": 443,
+                "hop": 1,
+                "openings": [
+                  {
+                    "from_port": 443,
+                    "port": "443/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-shop-web",
+                    "sg_name": "shop-web",
+                    "source_kind": "cidr",
+                    "source_value": "0.0.0.0/0",
+                    "to_port": 443,
+                    "verified": true
+                  }
+                ],
+                "port": "443/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-shop-web",
+                "security_group_name": "shop-web",
+                "source": "0.0.0.0/0",
+                "source_kind": "cidr",
+                "source_value": "0.0.0.0/0",
+                "target": "web",
+                "to_port": 443,
+                "verified": true
+              },
+              {
+                "from_port": 8080,
+                "hop": 2,
+                "openings": [
+                  {
+                    "from_port": 8080,
+                    "port": "8080/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-shop-app",
+                    "sg_name": "shop-app",
+                    "source_kind": "security-group",
+                    "source_value": "sg-shop-web",
+                    "to_port": 8080,
+                    "verified": true
+                  }
+                ],
+                "port": "8080/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-shop-app",
+                "security_group_name": "shop-app",
+                "source": "web",
+                "source_kind": "security-group",
+                "source_value": "sg-shop-web",
+                "target": "app",
+                "to_port": 8080,
+                "verified": true
+              },
+              {
+                "from_port": 5432,
+                "hop": 3,
+                "openings": [
+                  {
+                    "from_port": 5432,
+                    "port": "5432/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-shop-db",
+                    "sg_name": "shop-db",
+                    "source_kind": "security-group",
+                    "source_value": "sg-shop-app",
+                    "to_port": 5432,
+                    "verified": true
+                  }
+                ],
+                "port": "5432/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-shop-db",
+                "security_group_name": "shop-db",
+                "source": "app",
+                "source_kind": "security-group",
+                "source_value": "sg-shop-app",
+                "target": "db-orders",
+                "to_port": 5432,
+                "verified": true
+              }
+            ],
+            "id": "path-002",
+            "node_count": 4,
+            "nodes": [
+              "0.0.0.0/0",
+              "web",
+              "app",
+              "db-orders"
+            ],
+            "path": [
+              "0.0.0.0/0",
+              "web",
+              "app",
+              "db-orders"
+            ],
+            "ports": [
+              "443/tcp",
+              "5432/tcp",
+              "8080/tcp"
+            ],
+            "risk": "medium",
+            "rule_verified": true,
+            "sensitive": true,
+            "source": "0.0.0.0/0",
+            "target": "db-orders",
+            "target_name": "shop-db-orders",
+            "target_type": "rds"
+          }
+        ],
+        "reachable_resources": [
+          "db-orders"
+        ],
+        "schema": "cloudmapper.reachability/v1",
+        "sensitive_resources": [
+          {
+            "id": "db-orders",
+            "internet_reachable": false,
+            "name": "shop-db-orders",
+            "sensitive": true,
+            "type": "rds"
+          }
+        ],
+        "source": "0.0.0.0/0",
+        "summary": {
+          "edges": 5,
+          "nodes": 5,
+          "paths": 2,
+          "reachable_sensitive_resources": 1,
+          "security_groups": 0,
+          "sensitive_resources": 1,
+          "verified_paths": 2
+        }
+      },
+      "title": "Shop production (bastion and web tiers)"
+    },
+    {
+      "graph": [
+        {
+          "data": {
+            "id": "jump",
+            "local_id": "jump",
+            "name": "analytics-jump",
+            "node_data": {
+              "InstanceId": "jump",
+              "PrivateIpAddress": "10.10.1.10",
+              "PublicIpAddress": "54.2.2.2",
+              "SecurityGroups": [
+                {
+                  "GroupId": "sg-an-jump"
+                }
+              ],
+              "Tags": [
+                {
+                  "Key": "Name",
+                  "Value": "analytics-jump"
+                }
+              ]
+            },
+            "type": "ec2"
+          }
+        },
+        {
+          "data": {
+            "id": "worker",
+            "local_id": "worker",
+            "name": "analytics-worker",
+            "node_data": {
+              "InstanceId": "worker",
+              "PrivateIpAddress": "10.10.2.20",
+              "SecurityGroups": [
+                {
+                  "GroupId": "sg-an-worker"
+                }
+              ],
+              "Tags": [
+                {
+                  "Key": "Name",
+                  "Value": "analytics-worker"
+                }
+              ]
+            },
+            "type": "ec2"
+          }
+        },
+        {
+          "data": {
+            "id": "rs-bi",
+            "local_id": "rs-bi",
+            "name": "analytics-bi-redshift",
+            "node_data": {
+              "ClusterIdentifier": "rs-bi",
+              "PubliclyAccessible": false,
+              "VpcSecurityGroups": [
+                {
+                  "VpcSecurityGroupId": "sg-an-rs"
+                }
+              ]
+            },
+            "type": "redshift"
+          }
+        },
+        {
+          "data": {
+            "id": "db-locked",
+            "local_id": "db-locked",
+            "name": "analytics-locked-rds",
+            "node_data": {
+              "DBInstanceIdentifier": "db-locked",
+              "PubliclyAccessible": false,
+              "VpcSecurityGroups": [
+                {
+                  "VpcSecurityGroupId": "sg-an-locked"
+                }
+              ]
+            },
+            "type": "rds"
+          }
+        },
+        {
+          "data": {
+            "node_data": [
+              {
+                "GroupId": "sg-an-jump",
+                "GroupName": "analytics-jump",
+                "IpPermissions": [
+                  {
+                    "FromPort": 22,
+                    "IpProtocol": "tcp",
+                    "IpRanges": [
+                      {
+                        "CidrIp": "0.0.0.0/0"
+                      }
+                    ],
+                    "ToPort": 22
+                  }
+                ]
+              }
+            ],
+            "source": "0.0.0.0/0",
+            "target": "jump",
+            "type": "edge"
+          }
+        },
+        {
+          "data": {
+            "node_data": [
+              {
+                "GroupId": "sg-an-rs",
+                "GroupName": "analytics-redshift",
+                "IpPermissions": [
+                  {
+                    "FromPort": 5439,
+                    "IpProtocol": "tcp",
+                    "ToPort": 5439,
+                    "UserIdGroupPairs": [
+                      {
+                        "GroupId": "sg-an-jump"
+                      }
+                    ]
+                  },
+                  {
+                    "FromPort": 5439,
+                    "IpProtocol": "tcp",
+                    "IpRanges": [
+                      {
+                        "CidrIp": "10.10.0.0/16"
+                      }
+                    ],
+                    "ToPort": 5439
+                  }
+                ]
+              }
+            ],
+            "source": "db-locked",
+            "target": "rs-bi",
+            "type": "edge"
+          }
+        },
+        {
+          "data": {
+            "node_data": [
+              {
+                "GroupId": "sg-an-rs",
+                "GroupName": "analytics-redshift",
+                "IpPermissions": [
+                  {
+                    "FromPort": 5439,
+                    "IpProtocol": "tcp",
+                    "ToPort": 5439,
+                    "UserIdGroupPairs": [
+                      {
+                        "GroupId": "sg-an-jump"
+                      }
+                    ]
+                  },
+                  {
+                    "FromPort": 5439,
+                    "IpProtocol": "tcp",
+                    "IpRanges": [
+                      {
+                        "CidrIp": "10.10.0.0/16"
+                      }
+                    ],
+                    "ToPort": 5439
+                  }
+                ]
+              }
+            ],
+            "source": "jump",
+            "target": "rs-bi",
+            "type": "edge"
+          }
+        },
+        {
+          "data": {
+            "node_data": [
+              {
+                "GroupId": "sg-an-worker",
+                "GroupName": "analytics-worker",
+                "IpPermissions": [
+                  {
+                    "FromPort": 22,
+                    "IpProtocol": "tcp",
+                    "ToPort": 22,
+                    "UserIdGroupPairs": [
+                      {
+                        "GroupId": "sg-an-jump"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "source": "jump",
+            "target": "worker",
+            "type": "edge"
+          }
+        },
+        {
+          "data": {
+            "node_data": [
+              {
+                "GroupId": "sg-an-rs",
+                "GroupName": "analytics-redshift",
+                "IpPermissions": [
+                  {
+                    "FromPort": 5439,
+                    "IpProtocol": "tcp",
+                    "ToPort": 5439,
+                    "UserIdGroupPairs": [
+                      {
+                        "GroupId": "sg-an-jump"
+                      }
+                    ]
+                  },
+                  {
+                    "FromPort": 5439,
+                    "IpProtocol": "tcp",
+                    "IpRanges": [
+                      {
+                        "CidrIp": "10.10.0.0/16"
+                      }
+                    ],
+                    "ToPort": 5439
+                  }
+                ]
+              }
+            ],
+            "source": "worker",
+            "target": "rs-bi",
+            "type": "edge"
+          }
+        }
+      ],
+      "name": "analytics",
+      "report": {
+        "account": "analytics",
+        "findings": [
+          {
+            "account": "analytics",
+            "confidence": "verified",
+            "hop_count": 2,
+            "hops": [
+              {
+                "from_port": 22,
+                "hop": 1,
+                "openings": [
+                  {
+                    "from_port": 22,
+                    "port": "22/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-an-jump",
+                    "sg_name": "analytics-jump",
+                    "source_kind": "cidr",
+                    "source_value": "0.0.0.0/0",
+                    "to_port": 22,
+                    "verified": true
+                  }
+                ],
+                "port": "22/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-an-jump",
+                "security_group_name": "analytics-jump",
+                "source": "0.0.0.0/0",
+                "source_kind": "cidr",
+                "source_value": "0.0.0.0/0",
+                "target": "jump",
+                "to_port": 22,
+                "verified": true
+              },
+              {
+                "from_port": 5439,
+                "hop": 2,
+                "openings": [
+                  {
+                    "from_port": 5439,
+                    "port": "5439/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-an-rs",
+                    "sg_name": "analytics-redshift",
+                    "source_kind": "security-group",
+                    "source_value": "sg-an-jump",
+                    "to_port": 5439,
+                    "verified": true
+                  },
+                  {
+                    "from_port": 5439,
+                    "port": "5439/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-an-rs",
+                    "sg_name": "analytics-redshift",
+                    "source_kind": "cidr",
+                    "source_value": "10.10.0.0/16",
+                    "to_port": 5439,
+                    "verified": true
+                  }
+                ],
+                "port": "5439/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-an-rs",
+                "security_group_name": "analytics-redshift",
+                "source": "jump",
+                "source_kind": "security-group",
+                "source_value": "sg-an-jump",
+                "target": "rs-bi",
+                "to_port": 5439,
+                "verified": true
+              }
+            ],
+            "id": "path-001",
+            "node_count": 3,
+            "nodes": [
+              "0.0.0.0/0",
+              "jump",
+              "rs-bi"
+            ],
+            "path": [
+              "0.0.0.0/0",
+              "jump",
+              "rs-bi"
+            ],
+            "ports": [
+              "22/tcp",
+              "5439/tcp"
+            ],
+            "risk": "high",
+            "rule_verified": true,
+            "sensitive": true,
+            "source": "0.0.0.0/0",
+            "target": "rs-bi",
+            "target_name": "analytics-bi-redshift",
+            "target_type": "redshift"
+          },
+          {
+            "account": "analytics",
+            "confidence": "verified",
+            "hop_count": 3,
+            "hops": [
+              {
+                "from_port": 22,
+                "hop": 1,
+                "openings": [
+                  {
+                    "from_port": 22,
+                    "port": "22/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-an-jump",
+                    "sg_name": "analytics-jump",
+                    "source_kind": "cidr",
+                    "source_value": "0.0.0.0/0",
+                    "to_port": 22,
+                    "verified": true
+                  }
+                ],
+                "port": "22/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-an-jump",
+                "security_group_name": "analytics-jump",
+                "source": "0.0.0.0/0",
+                "source_kind": "cidr",
+                "source_value": "0.0.0.0/0",
+                "target": "jump",
+                "to_port": 22,
+                "verified": true
+              },
+              {
+                "from_port": 22,
+                "hop": 2,
+                "openings": [
+                  {
+                    "from_port": 22,
+                    "port": "22/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-an-worker",
+                    "sg_name": "analytics-worker",
+                    "source_kind": "security-group",
+                    "source_value": "sg-an-jump",
+                    "to_port": 22,
+                    "verified": true
+                  }
+                ],
+                "port": "22/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-an-worker",
+                "security_group_name": "analytics-worker",
+                "source": "jump",
+                "source_kind": "security-group",
+                "source_value": "sg-an-jump",
+                "target": "worker",
+                "to_port": 22,
+                "verified": true
+              },
+              {
+                "from_port": 5439,
+                "hop": 3,
+                "openings": [
+                  {
+                    "from_port": 5439,
+                    "port": "5439/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-an-rs",
+                    "sg_name": "analytics-redshift",
+                    "source_kind": "cidr",
+                    "source_value": "10.10.0.0/16",
+                    "to_port": 5439,
+                    "verified": true
+                  }
+                ],
+                "port": "5439/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-an-rs",
+                "security_group_name": "analytics-redshift",
+                "source": "worker",
+                "source_kind": "cidr",
+                "source_value": "10.10.0.0/16",
+                "target": "rs-bi",
+                "to_port": 5439,
+                "verified": true
+              }
+            ],
+            "id": "path-002",
+            "node_count": 4,
+            "nodes": [
+              "0.0.0.0/0",
+              "jump",
+              "worker",
+              "rs-bi"
+            ],
+            "path": [
+              "0.0.0.0/0",
+              "jump",
+              "worker",
+              "rs-bi"
+            ],
+            "ports": [
+              "22/tcp",
+              "5439/tcp"
+            ],
+            "risk": "medium",
+            "rule_verified": true,
+            "sensitive": true,
+            "source": "0.0.0.0/0",
+            "target": "rs-bi",
+            "target_name": "analytics-bi-redshift",
+            "target_type": "redshift"
+          }
+        ],
+        "options": {
+          "max_hops": 6,
+          "port": null,
+          "protocol": null,
+          "sensitive_only": true
+        },
+        "path_keys": [
+          [
+            "0.0.0.0/0",
+            "jump",
+            "rs-bi"
+          ],
+          [
+            "0.0.0.0/0",
+            "jump",
+            "worker",
+            "rs-bi"
+          ]
+        ],
+        "paths": [
+          {
+            "account": "analytics",
+            "confidence": "verified",
+            "hop_count": 2,
+            "hops": [
+              {
+                "from_port": 22,
+                "hop": 1,
+                "openings": [
+                  {
+                    "from_port": 22,
+                    "port": "22/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-an-jump",
+                    "sg_name": "analytics-jump",
+                    "source_kind": "cidr",
+                    "source_value": "0.0.0.0/0",
+                    "to_port": 22,
+                    "verified": true
+                  }
+                ],
+                "port": "22/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-an-jump",
+                "security_group_name": "analytics-jump",
+                "source": "0.0.0.0/0",
+                "source_kind": "cidr",
+                "source_value": "0.0.0.0/0",
+                "target": "jump",
+                "to_port": 22,
+                "verified": true
+              },
+              {
+                "from_port": 5439,
+                "hop": 2,
+                "openings": [
+                  {
+                    "from_port": 5439,
+                    "port": "5439/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-an-rs",
+                    "sg_name": "analytics-redshift",
+                    "source_kind": "security-group",
+                    "source_value": "sg-an-jump",
+                    "to_port": 5439,
+                    "verified": true
+                  },
+                  {
+                    "from_port": 5439,
+                    "port": "5439/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-an-rs",
+                    "sg_name": "analytics-redshift",
+                    "source_kind": "cidr",
+                    "source_value": "10.10.0.0/16",
+                    "to_port": 5439,
+                    "verified": true
+                  }
+                ],
+                "port": "5439/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-an-rs",
+                "security_group_name": "analytics-redshift",
+                "source": "jump",
+                "source_kind": "security-group",
+                "source_value": "sg-an-jump",
+                "target": "rs-bi",
+                "to_port": 5439,
+                "verified": true
+              }
+            ],
+            "id": "path-001",
+            "node_count": 3,
+            "nodes": [
+              "0.0.0.0/0",
+              "jump",
+              "rs-bi"
+            ],
+            "path": [
+              "0.0.0.0/0",
+              "jump",
+              "rs-bi"
+            ],
+            "ports": [
+              "22/tcp",
+              "5439/tcp"
+            ],
+            "risk": "high",
+            "rule_verified": true,
+            "sensitive": true,
+            "source": "0.0.0.0/0",
+            "target": "rs-bi",
+            "target_name": "analytics-bi-redshift",
+            "target_type": "redshift"
+          },
+          {
+            "account": "analytics",
+            "confidence": "verified",
+            "hop_count": 3,
+            "hops": [
+              {
+                "from_port": 22,
+                "hop": 1,
+                "openings": [
+                  {
+                    "from_port": 22,
+                    "port": "22/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-an-jump",
+                    "sg_name": "analytics-jump",
+                    "source_kind": "cidr",
+                    "source_value": "0.0.0.0/0",
+                    "to_port": 22,
+                    "verified": true
+                  }
+                ],
+                "port": "22/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-an-jump",
+                "security_group_name": "analytics-jump",
+                "source": "0.0.0.0/0",
+                "source_kind": "cidr",
+                "source_value": "0.0.0.0/0",
+                "target": "jump",
+                "to_port": 22,
+                "verified": true
+              },
+              {
+                "from_port": 22,
+                "hop": 2,
+                "openings": [
+                  {
+                    "from_port": 22,
+                    "port": "22/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-an-worker",
+                    "sg_name": "analytics-worker",
+                    "source_kind": "security-group",
+                    "source_value": "sg-an-jump",
+                    "to_port": 22,
+                    "verified": true
+                  }
+                ],
+                "port": "22/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-an-worker",
+                "security_group_name": "analytics-worker",
+                "source": "jump",
+                "source_kind": "security-group",
+                "source_value": "sg-an-jump",
+                "target": "worker",
+                "to_port": 22,
+                "verified": true
+              },
+              {
+                "from_port": 5439,
+                "hop": 3,
+                "openings": [
+                  {
+                    "from_port": 5439,
+                    "port": "5439/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-an-rs",
+                    "sg_name": "analytics-redshift",
+                    "source_kind": "cidr",
+                    "source_value": "10.10.0.0/16",
+                    "to_port": 5439,
+                    "verified": true
+                  }
+                ],
+                "port": "5439/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-an-rs",
+                "security_group_name": "analytics-redshift",
+                "source": "worker",
+                "source_kind": "cidr",
+                "source_value": "10.10.0.0/16",
+                "target": "rs-bi",
+                "to_port": 5439,
+                "verified": true
+              }
+            ],
+            "id": "path-002",
+            "node_count": 4,
+            "nodes": [
+              "0.0.0.0/0",
+              "jump",
+              "worker",
+              "rs-bi"
+            ],
+            "path": [
+              "0.0.0.0/0",
+              "jump",
+              "worker",
+              "rs-bi"
+            ],
+            "ports": [
+              "22/tcp",
+              "5439/tcp"
+            ],
+            "risk": "medium",
+            "rule_verified": true,
+            "sensitive": true,
+            "source": "0.0.0.0/0",
+            "target": "rs-bi",
+            "target_name": "analytics-bi-redshift",
+            "target_type": "redshift"
+          }
+        ],
+        "reachable_paths": [
+          {
+            "account": "analytics",
+            "confidence": "verified",
+            "hop_count": 2,
+            "hops": [
+              {
+                "from_port": 22,
+                "hop": 1,
+                "openings": [
+                  {
+                    "from_port": 22,
+                    "port": "22/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-an-jump",
+                    "sg_name": "analytics-jump",
+                    "source_kind": "cidr",
+                    "source_value": "0.0.0.0/0",
+                    "to_port": 22,
+                    "verified": true
+                  }
+                ],
+                "port": "22/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-an-jump",
+                "security_group_name": "analytics-jump",
+                "source": "0.0.0.0/0",
+                "source_kind": "cidr",
+                "source_value": "0.0.0.0/0",
+                "target": "jump",
+                "to_port": 22,
+                "verified": true
+              },
+              {
+                "from_port": 5439,
+                "hop": 2,
+                "openings": [
+                  {
+                    "from_port": 5439,
+                    "port": "5439/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-an-rs",
+                    "sg_name": "analytics-redshift",
+                    "source_kind": "security-group",
+                    "source_value": "sg-an-jump",
+                    "to_port": 5439,
+                    "verified": true
+                  },
+                  {
+                    "from_port": 5439,
+                    "port": "5439/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-an-rs",
+                    "sg_name": "analytics-redshift",
+                    "source_kind": "cidr",
+                    "source_value": "10.10.0.0/16",
+                    "to_port": 5439,
+                    "verified": true
+                  }
+                ],
+                "port": "5439/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-an-rs",
+                "security_group_name": "analytics-redshift",
+                "source": "jump",
+                "source_kind": "security-group",
+                "source_value": "sg-an-jump",
+                "target": "rs-bi",
+                "to_port": 5439,
+                "verified": true
+              }
+            ],
+            "id": "path-001",
+            "node_count": 3,
+            "nodes": [
+              "0.0.0.0/0",
+              "jump",
+              "rs-bi"
+            ],
+            "path": [
+              "0.0.0.0/0",
+              "jump",
+              "rs-bi"
+            ],
+            "ports": [
+              "22/tcp",
+              "5439/tcp"
+            ],
+            "risk": "high",
+            "rule_verified": true,
+            "sensitive": true,
+            "source": "0.0.0.0/0",
+            "target": "rs-bi",
+            "target_name": "analytics-bi-redshift",
+            "target_type": "redshift"
+          },
+          {
+            "account": "analytics",
+            "confidence": "verified",
+            "hop_count": 3,
+            "hops": [
+              {
+                "from_port": 22,
+                "hop": 1,
+                "openings": [
+                  {
+                    "from_port": 22,
+                    "port": "22/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-an-jump",
+                    "sg_name": "analytics-jump",
+                    "source_kind": "cidr",
+                    "source_value": "0.0.0.0/0",
+                    "to_port": 22,
+                    "verified": true
+                  }
+                ],
+                "port": "22/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-an-jump",
+                "security_group_name": "analytics-jump",
+                "source": "0.0.0.0/0",
+                "source_kind": "cidr",
+                "source_value": "0.0.0.0/0",
+                "target": "jump",
+                "to_port": 22,
+                "verified": true
+              },
+              {
+                "from_port": 22,
+                "hop": 2,
+                "openings": [
+                  {
+                    "from_port": 22,
+                    "port": "22/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-an-worker",
+                    "sg_name": "analytics-worker",
+                    "source_kind": "security-group",
+                    "source_value": "sg-an-jump",
+                    "to_port": 22,
+                    "verified": true
+                  }
+                ],
+                "port": "22/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-an-worker",
+                "security_group_name": "analytics-worker",
+                "source": "jump",
+                "source_kind": "security-group",
+                "source_value": "sg-an-jump",
+                "target": "worker",
+                "to_port": 22,
+                "verified": true
+              },
+              {
+                "from_port": 5439,
+                "hop": 3,
+                "openings": [
+                  {
+                    "from_port": 5439,
+                    "port": "5439/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-an-rs",
+                    "sg_name": "analytics-redshift",
+                    "source_kind": "cidr",
+                    "source_value": "10.10.0.0/16",
+                    "to_port": 5439,
+                    "verified": true
+                  }
+                ],
+                "port": "5439/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-an-rs",
+                "security_group_name": "analytics-redshift",
+                "source": "worker",
+                "source_kind": "cidr",
+                "source_value": "10.10.0.0/16",
+                "target": "rs-bi",
+                "to_port": 5439,
+                "verified": true
+              }
+            ],
+            "id": "path-002",
+            "node_count": 4,
+            "nodes": [
+              "0.0.0.0/0",
+              "jump",
+              "worker",
+              "rs-bi"
+            ],
+            "path": [
+              "0.0.0.0/0",
+              "jump",
+              "worker",
+              "rs-bi"
+            ],
+            "ports": [
+              "22/tcp",
+              "5439/tcp"
+            ],
+            "risk": "medium",
+            "rule_verified": true,
+            "sensitive": true,
+            "source": "0.0.0.0/0",
+            "target": "rs-bi",
+            "target_name": "analytics-bi-redshift",
+            "target_type": "redshift"
+          }
+        ],
+        "reachable_resources": [
+          "rs-bi"
+        ],
+        "schema": "cloudmapper.reachability/v1",
+        "sensitive_resources": [
+          {
+            "id": "db-locked",
+            "internet_reachable": false,
+            "name": "analytics-locked-rds",
+            "sensitive": true,
+            "type": "rds"
+          },
+          {
+            "id": "rs-bi",
+            "internet_reachable": false,
+            "name": "analytics-bi-redshift",
+            "sensitive": true,
+            "type": "redshift"
+          }
+        ],
+        "source": "0.0.0.0/0",
+        "summary": {
+          "edges": 5,
+          "nodes": 5,
+          "paths": 2,
+          "reachable_sensitive_resources": 1,
+          "security_groups": 0,
+          "sensitive_resources": 2,
+          "verified_paths": 2
+        }
+      },
+      "title": "Analytics VPC (SG pairs plus a broad private CIDR rule)"
+    },
+    {
+      "graph": [
+        {
+          "data": {
+            "id": "elb-partner",
+            "local_id": "elb-partner",
+            "name": "partner-elb",
+            "node_data": {
+              "LoadBalancerName": "elb-partner",
+              "Scheme": "internet-facing",
+              "SecurityGroups": [
+                "sg-p-ELB"
+              ]
+            },
+            "type": "elbv2"
+          }
+        },
+        {
+          "data": {
+            "id": "api",
+            "local_id": "api",
+            "name": "partner-api",
+            "node_data": {
+              "InstanceId": "api",
+              "PrivateIpAddress": "10.3.0.10",
+              "SecurityGroups": [
+                {
+                  "GroupId": "sg-p-api"
+                }
+              ],
+              "Tags": [
+                {
+                  "Key": "Name",
+                  "Value": "partner-api"
+                }
+              ]
+            },
+            "type": "ec2"
+          }
+        },
+        {
+          "data": {
+            "id": "es-partner",
+            "local_id": "es-partner",
+            "name": "partner-es",
+            "node_data": {
+              "DomainName": "es-partner",
+              "VPCOptions": {
+                "SecurityGroupIds": [
+                  "sg-p-es"
+                ]
+              }
+            },
+            "type": "elasticsearch"
+          }
+        },
+        {
+          "data": {
+            "id": "rds-leak",
+            "local_id": "rds-leak",
+            "name": "partner-leaked-rds",
+            "node_data": {
+              "DBInstanceIdentifier": "rds-leak",
+              "PubliclyAccessible": true,
+              "VpcSecurityGroups": [
+                {
+                  "VpcSecurityGroupId": "sg-p-rdsopen"
+                }
+              ]
+            },
+            "type": "rds"
+          }
+        },
+        {
+          "data": {
+            "id": "hidden",
+            "local_id": "hidden",
+            "name": "partner-private-only-web",
+            "node_data": {
+              "InstanceId": "hidden",
+              "PrivateIpAddress": "10.3.9.9",
+              "SecurityGroups": [
+                {
+                  "GroupId": "sg-p-hiddenweb"
+                }
+              ],
+              "Tags": [
+                {
+                  "Key": "Name",
+                  "Value": "partner-private-only-web"
+                }
+              ]
+            },
+            "type": "ec2"
+          }
+        },
+        {
+          "data": {
+            "node_data": [
+              {
+                "GroupId": "sg-p-ELB",
+                "GroupName": "partner-elb",
+                "IpPermissions": [
+                  {
+                    "FromPort": 443,
+                    "IpProtocol": "tcp",
+                    "IpRanges": [
+                      {
+                        "CidrIp": "0.0.0.0/0"
+                      }
+                    ],
+                    "ToPort": 443
+                  }
+                ]
+              }
+            ],
+            "source": "0.0.0.0/0",
+            "target": "elb-partner",
+            "type": "edge"
+          }
+        },
+        {
+          "data": {
+            "node_data": [
+              {
+                "GroupId": "sg-p-rdsopen",
+                "GroupName": "partner-rds-open",
+                "IpPermissions": [
+                  {
+                    "FromPort": 3306,
+                    "IpProtocol": "tcp",
+                    "IpRanges": [
+                      {
+                        "CidrIp": "0.0.0.0/0"
+                      }
+                    ],
+                    "ToPort": 3306
+                  }
+                ]
+              }
+            ],
+            "source": "0.0.0.0/0",
+            "target": "rds-leak",
+            "type": "edge"
+          }
+        },
+        {
+          "data": {
+            "node_data": [
+              {
+                "GroupId": "sg-p-es",
+                "GroupName": "partner-es",
+                "IpPermissions": [
+                  {
+                    "FromPort": 443,
+                    "IpProtocol": "tcp",
+                    "ToPort": 443,
+                    "UserIdGroupPairs": [
+                      {
+                        "GroupId": "sg-p-api"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "source": "api",
+            "target": "es-partner",
+            "type": "edge"
+          }
+        },
+        {
+          "data": {
+            "node_data": [
+              {
+                "GroupId": "sg-p-api",
+                "GroupName": "partner-api",
+                "IpPermissions": [
+                  {
+                    "FromPort": 443,
+                    "IpProtocol": "tcp",
+                    "ToPort": 443,
+                    "UserIdGroupPairs": [
+                      {
+                        "GroupId": "sg-p-ELB"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "source": "elb-partner",
+            "target": "api",
+            "type": "edge"
+          }
+        }
+      ],
+      "name": "partner",
+      "report": {
+        "account": "partner",
+        "findings": [
+          {
+            "account": "partner",
+            "confidence": "verified",
+            "hop_count": 3,
+            "hops": [
+              {
+                "from_port": 443,
+                "hop": 1,
+                "openings": [
+                  {
+                    "from_port": 443,
+                    "port": "443/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-p-ELB",
+                    "sg_name": "partner-elb",
+                    "source_kind": "cidr",
+                    "source_value": "0.0.0.0/0",
+                    "to_port": 443,
+                    "verified": true
+                  }
+                ],
+                "port": "443/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-p-ELB",
+                "security_group_name": "partner-elb",
+                "source": "0.0.0.0/0",
+                "source_kind": "cidr",
+                "source_value": "0.0.0.0/0",
+                "target": "elb-partner",
+                "to_port": 443,
+                "verified": true
+              },
+              {
+                "from_port": 443,
+                "hop": 2,
+                "openings": [
+                  {
+                    "from_port": 443,
+                    "port": "443/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-p-api",
+                    "sg_name": "partner-api",
+                    "source_kind": "security-group",
+                    "source_value": "sg-p-ELB",
+                    "to_port": 443,
+                    "verified": true
+                  }
+                ],
+                "port": "443/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-p-api",
+                "security_group_name": "partner-api",
+                "source": "elb-partner",
+                "source_kind": "security-group",
+                "source_value": "sg-p-ELB",
+                "target": "api",
+                "to_port": 443,
+                "verified": true
+              },
+              {
+                "from_port": 443,
+                "hop": 3,
+                "openings": [
+                  {
+                    "from_port": 443,
+                    "port": "443/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-p-es",
+                    "sg_name": "partner-es",
+                    "source_kind": "security-group",
+                    "source_value": "sg-p-api",
+                    "to_port": 443,
+                    "verified": true
+                  }
+                ],
+                "port": "443/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-p-es",
+                "security_group_name": "partner-es",
+                "source": "api",
+                "source_kind": "security-group",
+                "source_value": "sg-p-api",
+                "target": "es-partner",
+                "to_port": 443,
+                "verified": true
+              }
+            ],
+            "id": "path-001",
+            "node_count": 4,
+            "nodes": [
+              "0.0.0.0/0",
+              "elb-partner",
+              "api",
+              "es-partner"
+            ],
+            "path": [
+              "0.0.0.0/0",
+              "elb-partner",
+              "api",
+              "es-partner"
+            ],
+            "ports": [
+              "443/tcp"
+            ],
+            "risk": "medium",
+            "rule_verified": true,
+            "sensitive": true,
+            "source": "0.0.0.0/0",
+            "target": "es-partner",
+            "target_name": "partner-es",
+            "target_type": "elasticsearch"
+          },
+          {
+            "account": "partner",
+            "confidence": "verified",
+            "hop_count": 1,
+            "hops": [
+              {
+                "from_port": 3306,
+                "hop": 1,
+                "openings": [
+                  {
+                    "from_port": 3306,
+                    "port": "3306/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-p-rdsopen",
+                    "sg_name": "partner-rds-open",
+                    "source_kind": "cidr",
+                    "source_value": "0.0.0.0/0",
+                    "to_port": 3306,
+                    "verified": true
+                  }
+                ],
+                "port": "3306/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-p-rdsopen",
+                "security_group_name": "partner-rds-open",
+                "source": "0.0.0.0/0",
+                "source_kind": "cidr",
+                "source_value": "0.0.0.0/0",
+                "target": "rds-leak",
+                "to_port": 3306,
+                "verified": true
+              }
+            ],
+            "id": "path-002",
+            "node_count": 2,
+            "nodes": [
+              "0.0.0.0/0",
+              "rds-leak"
+            ],
+            "path": [
+              "0.0.0.0/0",
+              "rds-leak"
+            ],
+            "ports": [
+              "3306/tcp"
+            ],
+            "risk": "critical",
+            "rule_verified": true,
+            "sensitive": true,
+            "source": "0.0.0.0/0",
+            "target": "rds-leak",
+            "target_name": "partner-leaked-rds",
+            "target_type": "rds"
+          }
+        ],
+        "options": {
+          "max_hops": 6,
+          "port": null,
+          "protocol": null,
+          "sensitive_only": true
+        },
+        "path_keys": [
+          [
+            "0.0.0.0/0",
+            "elb-partner",
+            "api",
+            "es-partner"
+          ],
+          [
+            "0.0.0.0/0",
+            "rds-leak"
+          ]
+        ],
+        "paths": [
+          {
+            "account": "partner",
+            "confidence": "verified",
+            "hop_count": 3,
+            "hops": [
+              {
+                "from_port": 443,
+                "hop": 1,
+                "openings": [
+                  {
+                    "from_port": 443,
+                    "port": "443/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-p-ELB",
+                    "sg_name": "partner-elb",
+                    "source_kind": "cidr",
+                    "source_value": "0.0.0.0/0",
+                    "to_port": 443,
+                    "verified": true
+                  }
+                ],
+                "port": "443/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-p-ELB",
+                "security_group_name": "partner-elb",
+                "source": "0.0.0.0/0",
+                "source_kind": "cidr",
+                "source_value": "0.0.0.0/0",
+                "target": "elb-partner",
+                "to_port": 443,
+                "verified": true
+              },
+              {
+                "from_port": 443,
+                "hop": 2,
+                "openings": [
+                  {
+                    "from_port": 443,
+                    "port": "443/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-p-api",
+                    "sg_name": "partner-api",
+                    "source_kind": "security-group",
+                    "source_value": "sg-p-ELB",
+                    "to_port": 443,
+                    "verified": true
+                  }
+                ],
+                "port": "443/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-p-api",
+                "security_group_name": "partner-api",
+                "source": "elb-partner",
+                "source_kind": "security-group",
+                "source_value": "sg-p-ELB",
+                "target": "api",
+                "to_port": 443,
+                "verified": true
+              },
+              {
+                "from_port": 443,
+                "hop": 3,
+                "openings": [
+                  {
+                    "from_port": 443,
+                    "port": "443/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-p-es",
+                    "sg_name": "partner-es",
+                    "source_kind": "security-group",
+                    "source_value": "sg-p-api",
+                    "to_port": 443,
+                    "verified": true
+                  }
+                ],
+                "port": "443/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-p-es",
+                "security_group_name": "partner-es",
+                "source": "api",
+                "source_kind": "security-group",
+                "source_value": "sg-p-api",
+                "target": "es-partner",
+                "to_port": 443,
+                "verified": true
+              }
+            ],
+            "id": "path-001",
+            "node_count": 4,
+            "nodes": [
+              "0.0.0.0/0",
+              "elb-partner",
+              "api",
+              "es-partner"
+            ],
+            "path": [
+              "0.0.0.0/0",
+              "elb-partner",
+              "api",
+              "es-partner"
+            ],
+            "ports": [
+              "443/tcp"
+            ],
+            "risk": "medium",
+            "rule_verified": true,
+            "sensitive": true,
+            "source": "0.0.0.0/0",
+            "target": "es-partner",
+            "target_name": "partner-es",
+            "target_type": "elasticsearch"
+          },
+          {
+            "account": "partner",
+            "confidence": "verified",
+            "hop_count": 1,
+            "hops": [
+              {
+                "from_port": 3306,
+                "hop": 1,
+                "openings": [
+                  {
+                    "from_port": 3306,
+                    "port": "3306/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-p-rdsopen",
+                    "sg_name": "partner-rds-open",
+                    "source_kind": "cidr",
+                    "source_value": "0.0.0.0/0",
+                    "to_port": 3306,
+                    "verified": true
+                  }
+                ],
+                "port": "3306/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-p-rdsopen",
+                "security_group_name": "partner-rds-open",
+                "source": "0.0.0.0/0",
+                "source_kind": "cidr",
+                "source_value": "0.0.0.0/0",
+                "target": "rds-leak",
+                "to_port": 3306,
+                "verified": true
+              }
+            ],
+            "id": "path-002",
+            "node_count": 2,
+            "nodes": [
+              "0.0.0.0/0",
+              "rds-leak"
+            ],
+            "path": [
+              "0.0.0.0/0",
+              "rds-leak"
+            ],
+            "ports": [
+              "3306/tcp"
+            ],
+            "risk": "critical",
+            "rule_verified": true,
+            "sensitive": true,
+            "source": "0.0.0.0/0",
+            "target": "rds-leak",
+            "target_name": "partner-leaked-rds",
+            "target_type": "rds"
+          }
+        ],
+        "reachable_paths": [
+          {
+            "account": "partner",
+            "confidence": "verified",
+            "hop_count": 3,
+            "hops": [
+              {
+                "from_port": 443,
+                "hop": 1,
+                "openings": [
+                  {
+                    "from_port": 443,
+                    "port": "443/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-p-ELB",
+                    "sg_name": "partner-elb",
+                    "source_kind": "cidr",
+                    "source_value": "0.0.0.0/0",
+                    "to_port": 443,
+                    "verified": true
+                  }
+                ],
+                "port": "443/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-p-ELB",
+                "security_group_name": "partner-elb",
+                "source": "0.0.0.0/0",
+                "source_kind": "cidr",
+                "source_value": "0.0.0.0/0",
+                "target": "elb-partner",
+                "to_port": 443,
+                "verified": true
+              },
+              {
+                "from_port": 443,
+                "hop": 2,
+                "openings": [
+                  {
+                    "from_port": 443,
+                    "port": "443/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-p-api",
+                    "sg_name": "partner-api",
+                    "source_kind": "security-group",
+                    "source_value": "sg-p-ELB",
+                    "to_port": 443,
+                    "verified": true
+                  }
+                ],
+                "port": "443/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-p-api",
+                "security_group_name": "partner-api",
+                "source": "elb-partner",
+                "source_kind": "security-group",
+                "source_value": "sg-p-ELB",
+                "target": "api",
+                "to_port": 443,
+                "verified": true
+              },
+              {
+                "from_port": 443,
+                "hop": 3,
+                "openings": [
+                  {
+                    "from_port": 443,
+                    "port": "443/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-p-es",
+                    "sg_name": "partner-es",
+                    "source_kind": "security-group",
+                    "source_value": "sg-p-api",
+                    "to_port": 443,
+                    "verified": true
+                  }
+                ],
+                "port": "443/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-p-es",
+                "security_group_name": "partner-es",
+                "source": "api",
+                "source_kind": "security-group",
+                "source_value": "sg-p-api",
+                "target": "es-partner",
+                "to_port": 443,
+                "verified": true
+              }
+            ],
+            "id": "path-001",
+            "node_count": 4,
+            "nodes": [
+              "0.0.0.0/0",
+              "elb-partner",
+              "api",
+              "es-partner"
+            ],
+            "path": [
+              "0.0.0.0/0",
+              "elb-partner",
+              "api",
+              "es-partner"
+            ],
+            "ports": [
+              "443/tcp"
+            ],
+            "risk": "medium",
+            "rule_verified": true,
+            "sensitive": true,
+            "source": "0.0.0.0/0",
+            "target": "es-partner",
+            "target_name": "partner-es",
+            "target_type": "elasticsearch"
+          },
+          {
+            "account": "partner",
+            "confidence": "verified",
+            "hop_count": 1,
+            "hops": [
+              {
+                "from_port": 3306,
+                "hop": 1,
+                "openings": [
+                  {
+                    "from_port": 3306,
+                    "port": "3306/tcp",
+                    "protocol": "tcp",
+                    "sg_id": "sg-p-rdsopen",
+                    "sg_name": "partner-rds-open",
+                    "source_kind": "cidr",
+                    "source_value": "0.0.0.0/0",
+                    "to_port": 3306,
+                    "verified": true
+                  }
+                ],
+                "port": "3306/tcp",
+                "protocol": "tcp",
+                "security_group": "sg-p-rdsopen",
+                "security_group_name": "partner-rds-open",
+                "source": "0.0.0.0/0",
+                "source_kind": "cidr",
+                "source_value": "0.0.0.0/0",
+                "target": "rds-leak",
+                "to_port": 3306,
+                "verified": true
+              }
+            ],
+            "id": "path-002",
+            "node_count": 2,
+            "nodes": [
+              "0.0.0.0/0",
+              "rds-leak"
+            ],
+            "path": [
+              "0.0.0.0/0",
+              "rds-leak"
+            ],
+            "ports": [
+              "3306/tcp"
+            ],
+            "risk": "critical",
+            "rule_verified": true,
+            "sensitive": true,
+            "source": "0.0.0.0/0",
+            "target": "rds-leak",
+            "target_name": "partner-leaked-rds",
+            "target_type": "rds"
+          }
+        ],
+        "reachable_resources": [
+          "es-partner",
+          "rds-leak"
+        ],
+        "schema": "cloudmapper.reachability/v1",
+        "sensitive_resources": [
+          {
+            "id": "es-partner",
+            "internet_reachable": false,
+            "name": "partner-es",
+            "sensitive": true,
+            "type": "elasticsearch"
+          },
+          {
+            "id": "rds-leak",
+            "internet_reachable": false,
+            "name": "partner-leaked-rds",
+            "sensitive": true,
+            "type": "rds"
+          }
+        ],
+        "source": "0.0.0.0/0",
+        "summary": {
+          "edges": 4,
+          "nodes": 6,
+          "paths": 2,
+          "reachable_sensitive_resources": 2,
+          "security_groups": 0,
+          "sensitive_resources": 2,
+          "verified_paths": 2
+        }
+      },
+      "title": "Partner DMZ (internet-facing ELB and a leaked database)"
+    }
+  ],
+  "schema": "cloudmapper.reachability/v1+bundle"
+}

@@ -63,7 +63,9 @@ def main():
     arguments = sys.argv[2:]
 
     if command in commands:
-        commands[command].run(arguments)
+        exit_code = commands[command].run(arguments)
+        if isinstance(exit_code, int):
+            sys.exit(exit_code)
     else:
         show_help(commands)
 

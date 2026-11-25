@@ -1,0 +1,196 @@
+[
+  {
+    "data": {
+      "id": "elb-partner",
+      "local_id": "elb-partner",
+      "name": "partner-elb",
+      "node_data": {
+        "LoadBalancerName": "elb-partner",
+        "Scheme": "internet-facing",
+        "SecurityGroups": [
+          "sg-p-ELB"
+        ]
+      },
+      "type": "elbv2"
+    }
+  },
+  {
+    "data": {
+      "id": "api",
+      "local_id": "api",
+      "name": "partner-api",
+      "node_data": {
+        "InstanceId": "api",
+        "PrivateIpAddress": "10.3.0.10",
+        "SecurityGroups": [
+          {
+            "GroupId": "sg-p-api"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "partner-api"
+          }
+        ]
+      },
+      "type": "ec2"
+    }
+  },
+  {
+    "data": {
+      "id": "es-partner",
+      "local_id": "es-partner",
+      "name": "partner-es",
+      "node_data": {
+        "DomainName": "es-partner",
+        "VPCOptions": {
+          "SecurityGroupIds": [
+            "sg-p-es"
+          ]
+        }
+      },
+      "type": "elasticsearch"
+    }
+  },
+  {
+    "data": {
+      "id": "rds-leak",
+      "local_id": "rds-leak",
+      "name": "partner-leaked-rds",
+      "node_data": {
+        "DBInstanceIdentifier": "rds-leak",
+        "PubliclyAccessible": true,
+        "VpcSecurityGroups": [
+          {
+            "VpcSecurityGroupId": "sg-p-rdsopen"
+          }
+        ]
+      },
+      "type": "rds"
+    }
+  },
+  {
+    "data": {
+      "id": "hidden",
+      "local_id": "hidden",
+      "name": "partner-private-only-web",
+      "node_data": {
+        "InstanceId": "hidden",
+        "PrivateIpAddress": "10.3.9.9",
+        "SecurityGroups": [
+          {
+            "GroupId": "sg-p-hiddenweb"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "partner-private-only-web"
+          }
+        ]
+      },
+      "type": "ec2"
+    }
+  },
+  {
+    "data": {
+      "node_data": [
+        {
+          "GroupId": "sg-p-ELB",
+          "GroupName": "partner-elb",
+          "IpPermissions": [
+            {
+              "FromPort": 443,
+              "IpProtocol": "tcp",
+              "IpRanges": [
+                {
+                  "CidrIp": "0.0.0.0/0"
+                }
+              ],
+              "ToPort": 443
+            }
+          ]
+        }
+      ],
+      "source": "0.0.0.0/0",
+      "target": "elb-partner",
+      "type": "edge"
+    }
+  },
+  {
+    "data": {
+      "node_data": [
+        {
+          "GroupId": "sg-p-rdsopen",
+          "GroupName": "partner-rds-open",
+          "IpPermissions": [
+            {
+              "FromPort": 3306,
+              "IpProtocol": "tcp",
+              "IpRanges": [
+                {
+                  "CidrIp": "0.0.0.0/0"
+                }
+              ],
+              "ToPort": 3306
+            }
+          ]
+        }
+      ],
+      "source": "0.0.0.0/0",
+      "target": "rds-leak",
+      "type": "edge"
+    }
+  },
+  {
+    "data": {
+      "node_data": [
+        {
+          "GroupId": "sg-p-es",
+          "GroupName": "partner-es",
+          "IpPermissions": [
+            {
+              "FromPort": 443,
+              "IpProtocol": "tcp",
+              "ToPort": 443,
+              "UserIdGroupPairs": [
+                {
+                  "GroupId": "sg-p-api"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "source": "api",
+      "target": "es-partner",
+      "type": "edge"
+    }
+  },
+  {
+    "data": {
+      "node_data": [
+        {
+          "GroupId": "sg-p-api",
+          "GroupName": "partner-api",
+          "IpPermissions": [
+            {
+              "FromPort": 443,
+              "IpProtocol": "tcp",
+              "ToPort": 443,
+              "UserIdGroupPairs": [
+                {
+                  "GroupId": "sg-p-ELB"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "source": "elb-partner",
+      "target": "api",
+      "type": "edge"
+    }
+  }
+]

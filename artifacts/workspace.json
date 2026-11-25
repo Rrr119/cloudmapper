@@ -1,0 +1,17 @@
+{
+  "root": "/home/dev/feedback/uid38834",
+  "B": "/home/dev/feedback/uid38834",
+  "sha": "a89176ab1f1b4b0972db30c8094aa76533cdf9b0",
+  "wslDistro": "Ubuntu-26.04",
+  "source": {
+    "owner": "duo-labs",
+    "repo": "cloudmapper",
+    "sha": "a89176ab1f1b4b0972db30c8094aa76533cdf9b0"
+  },
+  "fork": {
+    "owner": "Rrr119",
+    "repo": "cloudmapper",
+    "cloneUrl": "https://github.com/Rrr119/cloudmapper.git"
+  },
+  "at": "2026-11-25T18:36:01.201Z"
+}

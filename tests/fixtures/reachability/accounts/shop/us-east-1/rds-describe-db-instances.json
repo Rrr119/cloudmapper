@@ -1,0 +1,13 @@
+{
+  "DBInstances": [
+    {
+      "DBInstanceIdentifier": "db-orders",
+      "PubliclyAccessible": false,
+      "VpcSecurityGroups": [
+        {
+          "VpcSecurityGroupId": "sg-shop-db"
+        }
+      ]
+    }
+  ]
+}

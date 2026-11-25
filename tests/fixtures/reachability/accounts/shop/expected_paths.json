@@ -1,0 +1,37 @@
+{
+  "paths": [
+    {
+      "hop_ports": [
+        "22/tcp",
+        "22/tcp",
+        "5432/tcp"
+      ],
+      "nodes": [
+        "0.0.0.0/0",
+        "bastion",
+        "app",
+        "db-orders"
+      ]
+    },
+    {
+      "hop_ports": [
+        "443/tcp",
+        "8080/tcp",
+        "5432/tcp"
+      ],
+      "nodes": [
+        "0.0.0.0/0",
+        "web",
+        "app",
+        "db-orders"
+      ]
+    }
+  ],
+  "reachable_sensitive_resources": [
+    "db-orders"
+  ],
+  "sensitive_resources": [
+    "db-orders"
+  ],
+  "unreachable_sensitive_resources": []
+}

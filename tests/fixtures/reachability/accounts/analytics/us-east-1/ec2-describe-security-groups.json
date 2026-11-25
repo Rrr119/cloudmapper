@@ -1,0 +1,78 @@
+{
+  "SecurityGroups": [
+    {
+      "GroupId": "sg-an-jump",
+      "GroupName": "analytics-jump",
+      "IpPermissions": [
+        {
+          "FromPort": 22,
+          "IpProtocol": "tcp",
+          "IpRanges": [
+            {
+              "CidrIp": "0.0.0.0/0"
+            }
+          ],
+          "ToPort": 22
+        }
+      ]
+    },
+    {
+      "GroupId": "sg-an-worker",
+      "GroupName": "analytics-worker",
+      "IpPermissions": [
+        {
+          "FromPort": 22,
+          "IpProtocol": "tcp",
+          "ToPort": 22,
+          "UserIdGroupPairs": [
+            {
+              "GroupId": "sg-an-jump"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "GroupId": "sg-an-rs",
+      "GroupName": "analytics-redshift",
+      "IpPermissions": [
+        {
+          "FromPort": 5439,
+          "IpProtocol": "tcp",
+          "ToPort": 5439,
+          "UserIdGroupPairs": [
+            {
+              "GroupId": "sg-an-jump"
+            }
+          ]
+        },
+        {
+          "FromPort": 5439,
+          "IpProtocol": "tcp",
+          "IpRanges": [
+            {
+              "CidrIp": "10.10.0.0/16"
+            }
+          ],
+          "ToPort": 5439
+        }
+      ]
+    },
+    {
+      "GroupId": "sg-an-locked",
+      "GroupName": "analytics-locked-db",
+      "IpPermissions": [
+        {
+          "FromPort": 5432,
+          "IpProtocol": "tcp",
+          "ToPort": 5432,
+          "UserIdGroupPairs": [
+            {
+              "GroupId": "sg-an-ghost"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

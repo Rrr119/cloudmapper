@@ -1,0 +1,47 @@
+{
+  "Reservations": [
+    {
+      "Instances": [
+        {
+          "InstanceId": "jump",
+          "PrivateIpAddress": "10.10.1.10",
+          "PublicIpAddress": "54.2.2.2",
+          "SecurityGroups": [
+            {
+              "GroupId": "sg-an-jump",
+              "GroupName": "sg-an-jump"
+            }
+          ],
+          "State": {
+            "Name": "running"
+          },
+          "Tags": [
+            {
+              "Key": "Name",
+              "Value": "analytics-jump"
+            }
+          ]
+        },
+        {
+          "InstanceId": "worker",
+          "PrivateIpAddress": "10.10.2.20",
+          "SecurityGroups": [
+            {
+              "GroupId": "sg-an-worker",
+              "GroupName": "sg-an-worker"
+            }
+          ],
+          "State": {
+            "Name": "running"
+          },
+          "Tags": [
+            {
+              "Key": "Name",
+              "Value": "analytics-worker"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

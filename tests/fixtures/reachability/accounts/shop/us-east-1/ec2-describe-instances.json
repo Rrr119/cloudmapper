@@ -1,0 +1,67 @@
+{
+  "Reservations": [
+    {
+      "Instances": [
+        {
+          "InstanceId": "bastion",
+          "PrivateIpAddress": "10.1.1.10",
+          "PublicIpAddress": "54.1.1.1",
+          "SecurityGroups": [
+            {
+              "GroupId": "sg-shop-bastion",
+              "GroupName": "sg-shop-bastion"
+            }
+          ],
+          "State": {
+            "Name": "running"
+          },
+          "Tags": [
+            {
+              "Key": "Name",
+              "Value": "shop-bastion"
+            }
+          ]
+        },
+        {
+          "InstanceId": "web",
+          "PrivateIpAddress": "10.1.2.20",
+          "PublicIpAddress": "54.1.1.2",
+          "SecurityGroups": [
+            {
+              "GroupId": "sg-shop-web",
+              "GroupName": "sg-shop-web"
+            }
+          ],
+          "State": {
+            "Name": "running"
+          },
+          "Tags": [
+            {
+              "Key": "Name",
+              "Value": "shop-web"
+            }
+          ]
+        },
+        {
+          "InstanceId": "app",
+          "PrivateIpAddress": "10.1.3.30",
+          "SecurityGroups": [
+            {
+              "GroupId": "sg-shop-app",
+              "GroupName": "sg-shop-app"
+            }
+          ],
+          "State": {
+            "Name": "running"
+          },
+          "Tags": [
+            {
+              "Key": "Name",
+              "Value": "shop-app"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

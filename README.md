@@ -21,6 +21,7 @@ It now contains much more functionality, including auditing for security issues.
 - `find_unused`: Look for unused resources in the account.  Finds unused Security Groups, Elastic IPs, network interfaces, volumes and elastic load balancers.
 - `prepare`/`webserver`: See [Network Visualizations](docs/network_visualizations.md)
 - `public`: Find public hosts and port ranges. More details [here](https://summitroute.com/blog/2018/06/13/cloudmapper_public/).
+- `reachability`: Internet → sensitive resource path analysis reasoned from security-group rules, compatible with `prepare` graph JSON, with incremental rule-update diffs and path highlighting. See [Reachability Analysis](docs/reachability.md).
 - `sg_ips`: Get geoip info on CIDRs trusted in Security Groups. More details [here](https://summitroute.com/blog/2018/06/12/cloudmapper_sg_ips/).
 - `stats`: Show counts of resources for accounts. More details [here](https://summitroute.com/blog/2018/06/06/cloudmapper_stats/).
 - `weboftrust`: Show Web Of Trust. More details [here](https://summitroute.com/blog/2018/06/13/cloudmapper_wot/).

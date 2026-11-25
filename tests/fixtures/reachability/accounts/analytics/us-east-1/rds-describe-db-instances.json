@@ -1,0 +1,13 @@
+{
+  "DBInstances": [
+    {
+      "DBInstanceIdentifier": "db-locked",
+      "PubliclyAccessible": false,
+      "VpcSecurityGroups": [
+        {
+          "VpcSecurityGroupId": "sg-an-locked"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,238 @@
+[
+  {
+    "data": {
+      "id": "jump",
+      "local_id": "jump",
+      "name": "analytics-jump",
+      "node_data": {
+        "InstanceId": "jump",
+        "PrivateIpAddress": "10.10.1.10",
+        "PublicIpAddress": "54.2.2.2",
+        "SecurityGroups": [
+          {
+            "GroupId": "sg-an-jump"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "analytics-jump"
+          }
+        ]
+      },
+      "type": "ec2"
+    }
+  },
+  {
+    "data": {
+      "id": "worker",
+      "local_id": "worker",
+      "name": "analytics-worker",
+      "node_data": {
+        "InstanceId": "worker",
+        "PrivateIpAddress": "10.10.2.20",
+        "SecurityGroups": [
+          {
+            "GroupId": "sg-an-worker"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "analytics-worker"
+          }
+        ]
+      },
+      "type": "ec2"
+    }
+  },
+  {
+    "data": {
+      "id": "rs-bi",
+      "local_id": "rs-bi",
+      "name": "analytics-bi-redshift",
+      "node_data": {
+        "ClusterIdentifier": "rs-bi",
+        "PubliclyAccessible": false,
+        "VpcSecurityGroups": [
+          {
+            "VpcSecurityGroupId": "sg-an-rs"
+          }
+        ]
+      },
+      "type": "redshift"
+    }
+  },
+  {
+    "data": {
+      "id": "db-locked",
+      "local_id": "db-locked",
+      "name": "analytics-locked-rds",
+      "node_data": {
+        "DBInstanceIdentifier": "db-locked",
+        "PubliclyAccessible": false,
+        "VpcSecurityGroups": [
+          {
+            "VpcSecurityGroupId": "sg-an-locked"
+          }
+        ]
+      },
+      "type": "rds"
+    }
+  },
+  {
+    "data": {
+      "node_data": [
+        {
+          "GroupId": "sg-an-jump",
+          "GroupName": "analytics-jump",
+          "IpPermissions": [
+            {
+              "FromPort": 22,
+              "IpProtocol": "tcp",
+              "IpRanges": [
+                {
+                  "CidrIp": "0.0.0.0/0"
+                }
+              ],
+              "ToPort": 22
+            }
+          ]
+        }
+      ],
+      "source": "0.0.0.0/0",
+      "target": "jump",
+      "type": "edge"
+    }
+  },
+  {
+    "data": {
+      "node_data": [
+        {
+          "GroupId": "sg-an-rs",
+          "GroupName": "analytics-redshift",
+          "IpPermissions": [
+            {
+              "FromPort": 5439,
+              "IpProtocol": "tcp",
+              "ToPort": 5439,
+              "UserIdGroupPairs": [
+                {
+                  "GroupId": "sg-an-jump"
+                }
+              ]
+            },
+            {
+              "FromPort": 5439,
+              "IpProtocol": "tcp",
+              "IpRanges": [
+                {
+                  "CidrIp": "10.10.0.0/16"
+                }
+              ],
+              "ToPort": 5439
+            }
+          ]
+        }
+      ],
+      "source": "db-locked",
+      "target": "rs-bi",
+      "type": "edge"
+    }
+  },
+  {
+    "data": {
+      "node_data": [
+        {
+          "GroupId": "sg-an-rs",
+          "GroupName": "analytics-redshift",
+          "IpPermissions": [
+            {
+              "FromPort": 5439,
+              "IpProtocol": "tcp",
+              "ToPort": 5439,
+              "UserIdGroupPairs": [
+                {
+                  "GroupId": "sg-an-jump"
+                }
+              ]
+            },
+            {
+              "FromPort": 5439,
+              "IpProtocol": "tcp",
+              "IpRanges": [
+                {
+                  "CidrIp": "10.10.0.0/16"
+                }
+              ],
+              "ToPort": 5439
+            }
+          ]
+        }
+      ],
+      "source": "jump",
+      "target": "rs-bi",
+      "type": "edge"
+    }
+  },
+  {
+    "data": {
+      "node_data": [
+        {
+          "GroupId": "sg-an-worker",
+          "GroupName": "analytics-worker",
+          "IpPermissions": [
+            {
+              "FromPort": 22,
+              "IpProtocol": "tcp",
+              "ToPort": 22,
+              "UserIdGroupPairs": [
+                {
+                  "GroupId": "sg-an-jump"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "source": "jump",
+      "target": "worker",
+      "type": "edge"
+    }
+  },
+  {
+    "data": {
+      "node_data": [
+        {
+          "GroupId": "sg-an-rs",
+          "GroupName": "analytics-redshift",
+          "IpPermissions": [
+            {
+              "FromPort": 5439,
+              "IpProtocol": "tcp",
+              "ToPort": 5439,
+              "UserIdGroupPairs": [
+                {
+                  "GroupId": "sg-an-jump"
+                }
+              ]
+            },
+            {
+              "FromPort": 5439,
+              "IpProtocol": "tcp",
+              "IpRanges": [
+                {
+                  "CidrIp": "10.10.0.0/16"
+                }
+              ],
+              "ToPort": 5439
+            }
+          ]
+        }
+      ],
+      "source": "worker",
+      "target": "rs-bi",
+      "type": "edge"
+    }
+  }
+]

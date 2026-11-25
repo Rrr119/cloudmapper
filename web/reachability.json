@@ -1,0 +1,4245 @@
+{
+  "account": "demo",
+  "findings": [
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-001",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-002",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-003",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-004",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-005",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-006",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-007",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-008",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-009",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-010",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-011",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-012",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "target_name": "database",
+      "target_type": "rds"
+    }
+  ],
+  "options": {
+    "max_hops": 6,
+    "port": null,
+    "protocol": null,
+    "sensitive_only": true
+  },
+  "path_keys": [
+    [
+      "0.0.0.0/0",
+      "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+      "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+      "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+    ],
+    [
+      "0.0.0.0/0",
+      "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+      "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+      "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+    ],
+    [
+      "0.0.0.0/0",
+      "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+      "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+      "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+    ],
+    [
+      "0.0.0.0/0",
+      "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+      "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+      "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+    ],
+    [
+      "0.0.0.0/0",
+      "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+      "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+      "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+    ],
+    [
+      "0.0.0.0/0",
+      "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+      "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+      "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+    ],
+    [
+      "0.0.0.0/0",
+      "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+      "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+      "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+    ],
+    [
+      "0.0.0.0/0",
+      "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+      "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+      "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+    ],
+    [
+      "0.0.0.0/0",
+      "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+      "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+      "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+    ],
+    [
+      "0.0.0.0/0",
+      "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+      "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+      "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+    ],
+    [
+      "0.0.0.0/0",
+      "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+      "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+      "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+    ],
+    [
+      "0.0.0.0/0",
+      "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+      "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+      "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+    ]
+  ],
+  "paths": [
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-001",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-002",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-003",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-004",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-005",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-006",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-007",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-008",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-009",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-010",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-011",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-012",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "target_name": "database",
+      "target_type": "rds"
+    }
+  ],
+  "reachable_paths": [
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-001",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-002",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-003",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-004",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000001",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-005",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-006",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-007",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-008",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancing:us-east-1:123456789012:instance/weblb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-009",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-010",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000001",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-011",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "target_name": "database",
+      "target_type": "rds"
+    },
+    {
+      "account": "demo",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000003",
+              "sg_name": "Public web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000003",
+          "security_group_name": "Public web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8000,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8000,
+              "port": "8000/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000004",
+              "sg_name": "Internal web",
+              "source_kind": "security-group",
+              "source_value": "sg-00000003",
+              "to_port": 8000,
+              "verified": true
+            }
+          ],
+          "port": "8000/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000004",
+          "security_group_name": "Internal web",
+          "source": "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000003",
+          "target": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "to_port": 8000,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-00000005",
+              "sg_name": "Database",
+              "source_kind": "security-group",
+              "source_value": "sg-00000004",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-00000005",
+          "security_group_name": "Database",
+          "source": "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+          "source_kind": "security-group",
+          "source_value": "sg-00000004",
+          "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-012",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "arn:aws:elasticloadbalancingv2:us-east-1:123456789012:instance/webalb/us-east-1.subnet-00000002",
+        "arn:aws:ec2:us-east-1:123456789012:instance/i-00000000000000002",
+        "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8000/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "target_name": "database",
+      "target_type": "rds"
+    }
+  ],
+  "reachable_resources": [
+    "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+    "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004"
+  ],
+  "schema": "cloudmapper.reachability/v1",
+  "sensitive_resources": [
+    {
+      "id": "arn:aws:es:us-east-1:123456789012:domain/myvpcdomain",
+      "internet_reachable": false,
+      "name": "myvpcdomain",
+      "sensitive": true,
+      "type": "elasticsearch"
+    },
+    {
+      "id": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000003",
+      "internet_reachable": false,
+      "name": "database",
+      "sensitive": true,
+      "type": "rds"
+    },
+    {
+      "id": "arn:aws:rds:us-east-1:123456789012:db:securitymonkey.subnet-00000004",
+      "internet_reachable": false,
+      "name": "database",
+      "sensitive": true,
+      "type": "rds"
+    },
+    {
+      "id": "redshift-cluster-1.clmpesh3q8lz.us-east-1.redshift.amazonaws.com.subnet-00000001",
+      "internet_reachable": false,
+      "name": "redshift-cluster-1",
+      "sensitive": true,
+      "type": "redshift"
+    },
+    {
+      "id": "redshift-cluster-1.clmpesh3q8lz.us-east-1.redshift.amazonaws.com.subnet-00000002",
+      "internet_reachable": false,
+      "name": "redshift-cluster-1",
+      "sensitive": true,
+      "type": "redshift"
+    }
+  ],
+  "source": "0.0.0.0/0",
+  "summary": {
+    "edges": 35,
+    "nodes": 28,
+    "paths": 12,
+    "reachable_sensitive_resources": 2,
+    "security_groups": 0,
+    "sensitive_resources": 5,
+    "verified_paths": 12
+  }
+}

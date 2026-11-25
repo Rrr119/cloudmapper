@@ -1,0 +1,13 @@
+{
+  "DBInstances": [
+    {
+      "DBInstanceIdentifier": "rds-leak",
+      "PubliclyAccessible": true,
+      "VpcSecurityGroups": [
+        {
+          "VpcSecurityGroupId": "sg-p-rdsopen"
+        }
+      ]
+    }
+  ]
+}

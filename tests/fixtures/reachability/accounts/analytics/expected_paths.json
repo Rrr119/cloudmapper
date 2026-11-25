@@ -1,0 +1,38 @@
+{
+  "paths": [
+    {
+      "hop_ports": [
+        "22/tcp",
+        "5439/tcp"
+      ],
+      "nodes": [
+        "0.0.0.0/0",
+        "jump",
+        "rs-bi"
+      ]
+    },
+    {
+      "hop_ports": [
+        "22/tcp",
+        "22/tcp",
+        "5439/tcp"
+      ],
+      "nodes": [
+        "0.0.0.0/0",
+        "jump",
+        "worker",
+        "rs-bi"
+      ]
+    }
+  ],
+  "reachable_sensitive_resources": [
+    "rs-bi"
+  ],
+  "sensitive_resources": [
+    "db-locked",
+    "rs-bi"
+  ],
+  "unreachable_sensitive_resources": [
+    "db-locked"
+  ]
+}

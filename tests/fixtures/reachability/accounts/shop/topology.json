@@ -1,0 +1,138 @@
+{
+  "account_id": "111111111111",
+  "name": "shop",
+  "narrative": [
+    "The bastion and the web server each have a public IP and a 0.0.0.0/0 ingress rule (SSH/22 and HTTPS/443).",
+    "The app security group accepts 22 from the bastion group and 8080 from the web group.",
+    "The orders database only accepts PostgreSQL/5432 from the app group, so it is reachable only through one of the two chains."
+  ],
+  "resources": [
+    {
+      "id": "bastion",
+      "name": "shop-bastion",
+      "private_ips": [
+        "10.1.1.10"
+      ],
+      "public_ips": [
+        "54.1.1.1"
+      ],
+      "sg_ids": [
+        "sg-shop-bastion"
+      ],
+      "type": "ec2"
+    },
+    {
+      "id": "web",
+      "name": "shop-web",
+      "private_ips": [
+        "10.1.2.20"
+      ],
+      "public_ips": [
+        "54.1.1.2"
+      ],
+      "sg_ids": [
+        "sg-shop-web"
+      ],
+      "type": "ec2"
+    },
+    {
+      "id": "app",
+      "name": "shop-app",
+      "private_ips": [
+        "10.1.3.30"
+      ],
+      "sg_ids": [
+        "sg-shop-app"
+      ],
+      "type": "ec2"
+    },
+    {
+      "id": "db-orders",
+      "name": "shop-db-orders",
+      "private_ips": [
+        "10.1.4.40"
+      ],
+      "sg_ids": [
+        "sg-shop-db"
+      ],
+      "type": "rds"
+    }
+  ],
+  "security_groups": [
+    {
+      "GroupId": "sg-shop-web",
+      "GroupName": "shop-web",
+      "IpPermissions": [
+        {
+          "FromPort": 443,
+          "IpProtocol": "tcp",
+          "IpRanges": [
+            {
+              "CidrIp": "0.0.0.0/0"
+            }
+          ],
+          "ToPort": 443
+        }
+      ]
+    },
+    {
+      "GroupId": "sg-shop-bastion",
+      "GroupName": "shop-bastion",
+      "IpPermissions": [
+        {
+          "FromPort": 22,
+          "IpProtocol": "tcp",
+          "IpRanges": [
+            {
+              "CidrIp": "0.0.0.0/0"
+            }
+          ],
+          "ToPort": 22
+        }
+      ]
+    },
+    {
+      "GroupId": "sg-shop-app",
+      "GroupName": "shop-app",
+      "IpPermissions": [
+        {
+          "FromPort": 8080,
+          "IpProtocol": "tcp",
+          "ToPort": 8080,
+          "UserIdGroupPairs": [
+            {
+              "GroupId": "sg-shop-web"
+            }
+          ]
+        },
+        {
+          "FromPort": 22,
+          "IpProtocol": "tcp",
+          "ToPort": 22,
+          "UserIdGroupPairs": [
+            {
+              "GroupId": "sg-shop-bastion"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "GroupId": "sg-shop-db",
+      "GroupName": "shop-db",
+      "IpPermissions": [
+        {
+          "FromPort": 5432,
+          "IpProtocol": "tcp",
+          "ToPort": 5432,
+          "UserIdGroupPairs": [
+            {
+              "GroupId": "sg-shop-app"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "title": "Shop production (bastion and web tiers)"
+}

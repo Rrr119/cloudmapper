@@ -1,0 +1,41 @@
+{
+  "must_not_contain_nodes": [
+    [
+      "0.0.0.0/0",
+      "hidden"
+    ]
+  ],
+  "paths": [
+    {
+      "hop_ports": [
+        "443/tcp",
+        "443/tcp",
+        "443/tcp"
+      ],
+      "nodes": [
+        "0.0.0.0/0",
+        "elb-partner",
+        "api",
+        "es-partner"
+      ]
+    },
+    {
+      "hop_ports": [
+        "3306/tcp"
+      ],
+      "nodes": [
+        "0.0.0.0/0",
+        "rds-leak"
+      ]
+    }
+  ],
+  "reachable_sensitive_resources": [
+    "es-partner",
+    "rds-leak"
+  ],
+  "sensitive_resources": [
+    "es-partner",
+    "rds-leak"
+  ],
+  "unreachable_sensitive_resources": []
+}

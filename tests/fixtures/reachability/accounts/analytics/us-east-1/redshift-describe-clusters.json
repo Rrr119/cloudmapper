@@ -1,0 +1,13 @@
+{
+  "Clusters": [
+    {
+      "ClusterIdentifier": "rs-bi",
+      "PubliclyAccessible": false,
+      "VpcSecurityGroups": [
+        {
+          "VpcSecurityGroupId": "sg-an-rs"
+        }
+      ]
+    }
+  ]
+}

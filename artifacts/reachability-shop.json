@@ -1,0 +1,733 @@
+{
+  "account": "shop",
+  "findings": [
+    {
+      "account": "shop",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 22,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 22,
+              "port": "22/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-shop-bastion",
+              "sg_name": "shop-bastion",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 22,
+              "verified": true
+            }
+          ],
+          "port": "22/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-shop-bastion",
+          "security_group_name": "shop-bastion",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "bastion",
+          "to_port": 22,
+          "verified": true
+        },
+        {
+          "from_port": 22,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 22,
+              "port": "22/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-shop-app",
+              "sg_name": "shop-app",
+              "source_kind": "security-group",
+              "source_value": "sg-shop-bastion",
+              "to_port": 22,
+              "verified": true
+            }
+          ],
+          "port": "22/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-shop-app",
+          "security_group_name": "shop-app",
+          "source": "bastion",
+          "source_kind": "security-group",
+          "source_value": "sg-shop-bastion",
+          "target": "app",
+          "to_port": 22,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-shop-db",
+              "sg_name": "shop-db",
+              "source_kind": "security-group",
+              "source_value": "sg-shop-app",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-shop-db",
+          "security_group_name": "shop-db",
+          "source": "app",
+          "source_kind": "security-group",
+          "source_value": "sg-shop-app",
+          "target": "db-orders",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-001",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "bastion",
+        "app",
+        "db-orders"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "bastion",
+        "app",
+        "db-orders"
+      ],
+      "ports": [
+        "22/tcp",
+        "5432/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "db-orders",
+      "target_name": "shop-db-orders",
+      "target_type": "rds"
+    },
+    {
+      "account": "shop",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-shop-web",
+              "sg_name": "shop-web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-shop-web",
+          "security_group_name": "shop-web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "web",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8080,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8080,
+              "port": "8080/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-shop-app",
+              "sg_name": "shop-app",
+              "source_kind": "security-group",
+              "source_value": "sg-shop-web",
+              "to_port": 8080,
+              "verified": true
+            }
+          ],
+          "port": "8080/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-shop-app",
+          "security_group_name": "shop-app",
+          "source": "web",
+          "source_kind": "security-group",
+          "source_value": "sg-shop-web",
+          "target": "app",
+          "to_port": 8080,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-shop-db",
+              "sg_name": "shop-db",
+              "source_kind": "security-group",
+              "source_value": "sg-shop-app",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-shop-db",
+          "security_group_name": "shop-db",
+          "source": "app",
+          "source_kind": "security-group",
+          "source_value": "sg-shop-app",
+          "target": "db-orders",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-002",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "web",
+        "app",
+        "db-orders"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "web",
+        "app",
+        "db-orders"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8080/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "db-orders",
+      "target_name": "shop-db-orders",
+      "target_type": "rds"
+    }
+  ],
+  "options": {
+    "max_hops": 6,
+    "port": null,
+    "protocol": null,
+    "sensitive_only": true
+  },
+  "path_keys": [
+    [
+      "0.0.0.0/0",
+      "bastion",
+      "app",
+      "db-orders"
+    ],
+    [
+      "0.0.0.0/0",
+      "web",
+      "app",
+      "db-orders"
+    ]
+  ],
+  "paths": [
+    {
+      "account": "shop",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 22,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 22,
+              "port": "22/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-shop-bastion",
+              "sg_name": "shop-bastion",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 22,
+              "verified": true
+            }
+          ],
+          "port": "22/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-shop-bastion",
+          "security_group_name": "shop-bastion",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "bastion",
+          "to_port": 22,
+          "verified": true
+        },
+        {
+          "from_port": 22,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 22,
+              "port": "22/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-shop-app",
+              "sg_name": "shop-app",
+              "source_kind": "security-group",
+              "source_value": "sg-shop-bastion",
+              "to_port": 22,
+              "verified": true
+            }
+          ],
+          "port": "22/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-shop-app",
+          "security_group_name": "shop-app",
+          "source": "bastion",
+          "source_kind": "security-group",
+          "source_value": "sg-shop-bastion",
+          "target": "app",
+          "to_port": 22,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-shop-db",
+              "sg_name": "shop-db",
+              "source_kind": "security-group",
+              "source_value": "sg-shop-app",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-shop-db",
+          "security_group_name": "shop-db",
+          "source": "app",
+          "source_kind": "security-group",
+          "source_value": "sg-shop-app",
+          "target": "db-orders",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-001",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "bastion",
+        "app",
+        "db-orders"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "bastion",
+        "app",
+        "db-orders"
+      ],
+      "ports": [
+        "22/tcp",
+        "5432/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "db-orders",
+      "target_name": "shop-db-orders",
+      "target_type": "rds"
+    },
+    {
+      "account": "shop",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-shop-web",
+              "sg_name": "shop-web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-shop-web",
+          "security_group_name": "shop-web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "web",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8080,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8080,
+              "port": "8080/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-shop-app",
+              "sg_name": "shop-app",
+              "source_kind": "security-group",
+              "source_value": "sg-shop-web",
+              "to_port": 8080,
+              "verified": true
+            }
+          ],
+          "port": "8080/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-shop-app",
+          "security_group_name": "shop-app",
+          "source": "web",
+          "source_kind": "security-group",
+          "source_value": "sg-shop-web",
+          "target": "app",
+          "to_port": 8080,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-shop-db",
+              "sg_name": "shop-db",
+              "source_kind": "security-group",
+              "source_value": "sg-shop-app",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-shop-db",
+          "security_group_name": "shop-db",
+          "source": "app",
+          "source_kind": "security-group",
+          "source_value": "sg-shop-app",
+          "target": "db-orders",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-002",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "web",
+        "app",
+        "db-orders"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "web",
+        "app",
+        "db-orders"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8080/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "db-orders",
+      "target_name": "shop-db-orders",
+      "target_type": "rds"
+    }
+  ],
+  "reachable_paths": [
+    {
+      "account": "shop",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 22,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 22,
+              "port": "22/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-shop-bastion",
+              "sg_name": "shop-bastion",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 22,
+              "verified": true
+            }
+          ],
+          "port": "22/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-shop-bastion",
+          "security_group_name": "shop-bastion",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "bastion",
+          "to_port": 22,
+          "verified": true
+        },
+        {
+          "from_port": 22,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 22,
+              "port": "22/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-shop-app",
+              "sg_name": "shop-app",
+              "source_kind": "security-group",
+              "source_value": "sg-shop-bastion",
+              "to_port": 22,
+              "verified": true
+            }
+          ],
+          "port": "22/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-shop-app",
+          "security_group_name": "shop-app",
+          "source": "bastion",
+          "source_kind": "security-group",
+          "source_value": "sg-shop-bastion",
+          "target": "app",
+          "to_port": 22,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-shop-db",
+              "sg_name": "shop-db",
+              "source_kind": "security-group",
+              "source_value": "sg-shop-app",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-shop-db",
+          "security_group_name": "shop-db",
+          "source": "app",
+          "source_kind": "security-group",
+          "source_value": "sg-shop-app",
+          "target": "db-orders",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-001",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "bastion",
+        "app",
+        "db-orders"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "bastion",
+        "app",
+        "db-orders"
+      ],
+      "ports": [
+        "22/tcp",
+        "5432/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "db-orders",
+      "target_name": "shop-db-orders",
+      "target_type": "rds"
+    },
+    {
+      "account": "shop",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-shop-web",
+              "sg_name": "shop-web",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-shop-web",
+          "security_group_name": "shop-web",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "web",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 8080,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 8080,
+              "port": "8080/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-shop-app",
+              "sg_name": "shop-app",
+              "source_kind": "security-group",
+              "source_value": "sg-shop-web",
+              "to_port": 8080,
+              "verified": true
+            }
+          ],
+          "port": "8080/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-shop-app",
+          "security_group_name": "shop-app",
+          "source": "web",
+          "source_kind": "security-group",
+          "source_value": "sg-shop-web",
+          "target": "app",
+          "to_port": 8080,
+          "verified": true
+        },
+        {
+          "from_port": 5432,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 5432,
+              "port": "5432/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-shop-db",
+              "sg_name": "shop-db",
+              "source_kind": "security-group",
+              "source_value": "sg-shop-app",
+              "to_port": 5432,
+              "verified": true
+            }
+          ],
+          "port": "5432/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-shop-db",
+          "security_group_name": "shop-db",
+          "source": "app",
+          "source_kind": "security-group",
+          "source_value": "sg-shop-app",
+          "target": "db-orders",
+          "to_port": 5432,
+          "verified": true
+        }
+      ],
+      "id": "path-002",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "web",
+        "app",
+        "db-orders"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "web",
+        "app",
+        "db-orders"
+      ],
+      "ports": [
+        "443/tcp",
+        "5432/tcp",
+        "8080/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "db-orders",
+      "target_name": "shop-db-orders",
+      "target_type": "rds"
+    }
+  ],
+  "reachable_resources": [
+    "db-orders"
+  ],
+  "schema": "cloudmapper.reachability/v1",
+  "sensitive_resources": [
+    {
+      "id": "db-orders",
+      "internet_reachable": false,
+      "name": "shop-db-orders",
+      "sensitive": true,
+      "type": "rds"
+    }
+  ],
+  "source": "0.0.0.0/0",
+  "summary": {
+    "edges": 5,
+    "nodes": 5,
+    "paths": 2,
+    "reachable_sensitive_resources": 1,
+    "security_groups": 0,
+    "sensitive_resources": 1,
+    "verified_paths": 2
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "Reservations": [
+    {
+      "Instances": [
+        {
+          "InstanceId": "api",
+          "PrivateIpAddress": "10.3.0.10",
+          "SecurityGroups": [
+            {
+              "GroupId": "sg-p-api",
+              "GroupName": "sg-p-api"
+            }
+          ],
+          "State": {
+            "Name": "running"
+          },
+          "Tags": [
+            {
+              "Key": "Name",
+              "Value": "partner-api"
+            }
+          ]
+        },
+        {
+          "InstanceId": "hidden",
+          "PrivateIpAddress": "10.3.9.9",
+          "SecurityGroups": [
+            {
+              "GroupId": "sg-p-hiddenweb",
+              "GroupName": "sg-p-hiddenweb"
+            }
+          ],
+          "State": {
+            "Name": "running"
+          },
+          "Tags": [
+            {
+              "Key": "Name",
+              "Value": "partner-private-only-web"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

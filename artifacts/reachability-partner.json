@@ -1,0 +1,556 @@
+{
+  "account": "partner",
+  "findings": [
+    {
+      "account": "partner",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-p-ELB",
+              "sg_name": "partner-elb",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-p-ELB",
+          "security_group_name": "partner-elb",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "elb-partner",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 443,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-p-api",
+              "sg_name": "partner-api",
+              "source_kind": "security-group",
+              "source_value": "sg-p-ELB",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-p-api",
+          "security_group_name": "partner-api",
+          "source": "elb-partner",
+          "source_kind": "security-group",
+          "source_value": "sg-p-ELB",
+          "target": "api",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 443,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-p-es",
+              "sg_name": "partner-es",
+              "source_kind": "security-group",
+              "source_value": "sg-p-api",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-p-es",
+          "security_group_name": "partner-es",
+          "source": "api",
+          "source_kind": "security-group",
+          "source_value": "sg-p-api",
+          "target": "es-partner",
+          "to_port": 443,
+          "verified": true
+        }
+      ],
+      "id": "path-001",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "elb-partner",
+        "api",
+        "es-partner"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "elb-partner",
+        "api",
+        "es-partner"
+      ],
+      "ports": [
+        "443/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "es-partner",
+      "target_name": "partner-es",
+      "target_type": "elasticsearch"
+    },
+    {
+      "account": "partner",
+      "confidence": "verified",
+      "hop_count": 1,
+      "hops": [
+        {
+          "from_port": 3306,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 3306,
+              "port": "3306/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-p-rdsopen",
+              "sg_name": "partner-rds-open",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 3306,
+              "verified": true
+            }
+          ],
+          "port": "3306/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-p-rdsopen",
+          "security_group_name": "partner-rds-open",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "rds-leak",
+          "to_port": 3306,
+          "verified": true
+        }
+      ],
+      "id": "path-002",
+      "node_count": 2,
+      "nodes": [
+        "0.0.0.0/0",
+        "rds-leak"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "rds-leak"
+      ],
+      "ports": [
+        "3306/tcp"
+      ],
+      "risk": "critical",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "rds-leak",
+      "target_name": "partner-leaked-rds",
+      "target_type": "rds"
+    }
+  ],
+  "options": {
+    "max_hops": 6,
+    "port": null,
+    "protocol": null,
+    "sensitive_only": true
+  },
+  "path_keys": [
+    [
+      "0.0.0.0/0",
+      "elb-partner",
+      "api",
+      "es-partner"
+    ],
+    [
+      "0.0.0.0/0",
+      "rds-leak"
+    ]
+  ],
+  "paths": [
+    {
+      "account": "partner",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-p-ELB",
+              "sg_name": "partner-elb",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-p-ELB",
+          "security_group_name": "partner-elb",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "elb-partner",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 443,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-p-api",
+              "sg_name": "partner-api",
+              "source_kind": "security-group",
+              "source_value": "sg-p-ELB",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-p-api",
+          "security_group_name": "partner-api",
+          "source": "elb-partner",
+          "source_kind": "security-group",
+          "source_value": "sg-p-ELB",
+          "target": "api",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 443,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-p-es",
+              "sg_name": "partner-es",
+              "source_kind": "security-group",
+              "source_value": "sg-p-api",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-p-es",
+          "security_group_name": "partner-es",
+          "source": "api",
+          "source_kind": "security-group",
+          "source_value": "sg-p-api",
+          "target": "es-partner",
+          "to_port": 443,
+          "verified": true
+        }
+      ],
+      "id": "path-001",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "elb-partner",
+        "api",
+        "es-partner"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "elb-partner",
+        "api",
+        "es-partner"
+      ],
+      "ports": [
+        "443/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "es-partner",
+      "target_name": "partner-es",
+      "target_type": "elasticsearch"
+    },
+    {
+      "account": "partner",
+      "confidence": "verified",
+      "hop_count": 1,
+      "hops": [
+        {
+          "from_port": 3306,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 3306,
+              "port": "3306/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-p-rdsopen",
+              "sg_name": "partner-rds-open",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 3306,
+              "verified": true
+            }
+          ],
+          "port": "3306/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-p-rdsopen",
+          "security_group_name": "partner-rds-open",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "rds-leak",
+          "to_port": 3306,
+          "verified": true
+        }
+      ],
+      "id": "path-002",
+      "node_count": 2,
+      "nodes": [
+        "0.0.0.0/0",
+        "rds-leak"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "rds-leak"
+      ],
+      "ports": [
+        "3306/tcp"
+      ],
+      "risk": "critical",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "rds-leak",
+      "target_name": "partner-leaked-rds",
+      "target_type": "rds"
+    }
+  ],
+  "reachable_paths": [
+    {
+      "account": "partner",
+      "confidence": "verified",
+      "hop_count": 3,
+      "hops": [
+        {
+          "from_port": 443,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-p-ELB",
+              "sg_name": "partner-elb",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-p-ELB",
+          "security_group_name": "partner-elb",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "elb-partner",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 443,
+          "hop": 2,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-p-api",
+              "sg_name": "partner-api",
+              "source_kind": "security-group",
+              "source_value": "sg-p-ELB",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-p-api",
+          "security_group_name": "partner-api",
+          "source": "elb-partner",
+          "source_kind": "security-group",
+          "source_value": "sg-p-ELB",
+          "target": "api",
+          "to_port": 443,
+          "verified": true
+        },
+        {
+          "from_port": 443,
+          "hop": 3,
+          "openings": [
+            {
+              "from_port": 443,
+              "port": "443/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-p-es",
+              "sg_name": "partner-es",
+              "source_kind": "security-group",
+              "source_value": "sg-p-api",
+              "to_port": 443,
+              "verified": true
+            }
+          ],
+          "port": "443/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-p-es",
+          "security_group_name": "partner-es",
+          "source": "api",
+          "source_kind": "security-group",
+          "source_value": "sg-p-api",
+          "target": "es-partner",
+          "to_port": 443,
+          "verified": true
+        }
+      ],
+      "id": "path-001",
+      "node_count": 4,
+      "nodes": [
+        "0.0.0.0/0",
+        "elb-partner",
+        "api",
+        "es-partner"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "elb-partner",
+        "api",
+        "es-partner"
+      ],
+      "ports": [
+        "443/tcp"
+      ],
+      "risk": "medium",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "es-partner",
+      "target_name": "partner-es",
+      "target_type": "elasticsearch"
+    },
+    {
+      "account": "partner",
+      "confidence": "verified",
+      "hop_count": 1,
+      "hops": [
+        {
+          "from_port": 3306,
+          "hop": 1,
+          "openings": [
+            {
+              "from_port": 3306,
+              "port": "3306/tcp",
+              "protocol": "tcp",
+              "sg_id": "sg-p-rdsopen",
+              "sg_name": "partner-rds-open",
+              "source_kind": "cidr",
+              "source_value": "0.0.0.0/0",
+              "to_port": 3306,
+              "verified": true
+            }
+          ],
+          "port": "3306/tcp",
+          "protocol": "tcp",
+          "security_group": "sg-p-rdsopen",
+          "security_group_name": "partner-rds-open",
+          "source": "0.0.0.0/0",
+          "source_kind": "cidr",
+          "source_value": "0.0.0.0/0",
+          "target": "rds-leak",
+          "to_port": 3306,
+          "verified": true
+        }
+      ],
+      "id": "path-002",
+      "node_count": 2,
+      "nodes": [
+        "0.0.0.0/0",
+        "rds-leak"
+      ],
+      "path": [
+        "0.0.0.0/0",
+        "rds-leak"
+      ],
+      "ports": [
+        "3306/tcp"
+      ],
+      "risk": "critical",
+      "rule_verified": true,
+      "sensitive": true,
+      "source": "0.0.0.0/0",
+      "target": "rds-leak",
+      "target_name": "partner-leaked-rds",
+      "target_type": "rds"
+    }
+  ],
+  "reachable_resources": [
+    "es-partner",
+    "rds-leak"
+  ],
+  "schema": "cloudmapper.reachability/v1",
+  "sensitive_resources": [
+    {
+      "id": "es-partner",
+      "internet_reachable": false,
+      "name": "partner-es",
+      "sensitive": true,
+      "type": "elasticsearch"
+    },
+    {
+      "id": "rds-leak",
+      "internet_reachable": false,
+      "name": "partner-leaked-rds",
+      "sensitive": true,
+      "type": "rds"
+    }
+  ],
+  "source": "0.0.0.0/0",
+  "summary": {
+    "edges": 4,
+    "nodes": 6,
+    "paths": 2,
+    "reachable_sensitive_resources": 2,
+    "security_groups": 0,
+    "sensitive_resources": 2,
+    "verified_paths": 2
+  }
+}

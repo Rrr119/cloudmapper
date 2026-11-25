@@ -1,0 +1,235 @@
+[
+  {
+    "data": {
+      "id": "bastion",
+      "local_id": "bastion",
+      "name": "shop-bastion",
+      "node_data": {
+        "InstanceId": "bastion",
+        "PrivateIpAddress": "10.1.1.10",
+        "PublicIpAddress": "54.1.1.1",
+        "SecurityGroups": [
+          {
+            "GroupId": "sg-shop-bastion"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "shop-bastion"
+          }
+        ]
+      },
+      "type": "ec2"
+    }
+  },
+  {
+    "data": {
+      "id": "web",
+      "local_id": "web",
+      "name": "shop-web",
+      "node_data": {
+        "InstanceId": "web",
+        "PrivateIpAddress": "10.1.2.20",
+        "PublicIpAddress": "54.1.1.2",
+        "SecurityGroups": [
+          {
+            "GroupId": "sg-shop-web"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "shop-web"
+          }
+        ]
+      },
+      "type": "ec2"
+    }
+  },
+  {
+    "data": {
+      "id": "app",
+      "local_id": "app",
+      "name": "shop-app",
+      "node_data": {
+        "InstanceId": "app",
+        "PrivateIpAddress": "10.1.3.30",
+        "SecurityGroups": [
+          {
+            "GroupId": "sg-shop-app"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "shop-app"
+          }
+        ]
+      },
+      "type": "ec2"
+    }
+  },
+  {
+    "data": {
+      "id": "db-orders",
+      "local_id": "db-orders",
+      "name": "shop-db-orders",
+      "node_data": {
+        "DBInstanceIdentifier": "db-orders",
+        "PubliclyAccessible": false,
+        "VpcSecurityGroups": [
+          {
+            "VpcSecurityGroupId": "sg-shop-db"
+          }
+        ]
+      },
+      "type": "rds"
+    }
+  },
+  {
+    "data": {
+      "node_data": [
+        {
+          "GroupId": "sg-shop-bastion",
+          "GroupName": "shop-bastion",
+          "IpPermissions": [
+            {
+              "FromPort": 22,
+              "IpProtocol": "tcp",
+              "IpRanges": [
+                {
+                  "CidrIp": "0.0.0.0/0"
+                }
+              ],
+              "ToPort": 22
+            }
+          ]
+        }
+      ],
+      "source": "0.0.0.0/0",
+      "target": "bastion",
+      "type": "edge"
+    }
+  },
+  {
+    "data": {
+      "node_data": [
+        {
+          "GroupId": "sg-shop-web",
+          "GroupName": "shop-web",
+          "IpPermissions": [
+            {
+              "FromPort": 443,
+              "IpProtocol": "tcp",
+              "IpRanges": [
+                {
+                  "CidrIp": "0.0.0.0/0"
+                }
+              ],
+              "ToPort": 443
+            }
+          ]
+        }
+      ],
+      "source": "0.0.0.0/0",
+      "target": "web",
+      "type": "edge"
+    }
+  },
+  {
+    "data": {
+      "node_data": [
+        {
+          "GroupId": "sg-shop-db",
+          "GroupName": "shop-db",
+          "IpPermissions": [
+            {
+              "FromPort": 5432,
+              "IpProtocol": "tcp",
+              "ToPort": 5432,
+              "UserIdGroupPairs": [
+                {
+                  "GroupId": "sg-shop-app"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "source": "app",
+      "target": "db-orders",
+      "type": "edge"
+    }
+  },
+  {
+    "data": {
+      "node_data": [
+        {
+          "GroupId": "sg-shop-app",
+          "GroupName": "shop-app",
+          "IpPermissions": [
+            {
+              "FromPort": 8080,
+              "IpProtocol": "tcp",
+              "ToPort": 8080,
+              "UserIdGroupPairs": [
+                {
+                  "GroupId": "sg-shop-web"
+                }
+              ]
+            },
+            {
+              "FromPort": 22,
+              "IpProtocol": "tcp",
+              "ToPort": 22,
+              "UserIdGroupPairs": [
+                {
+                  "GroupId": "sg-shop-bastion"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "source": "bastion",
+      "target": "app",
+      "type": "edge"
+    }
+  },
+  {
+    "data": {
+      "node_data": [
+        {
+          "GroupId": "sg-shop-app",
+          "GroupName": "shop-app",
+          "IpPermissions": [
+            {
+              "FromPort": 8080,
+              "IpProtocol": "tcp",
+              "ToPort": 8080,
+              "UserIdGroupPairs": [
+                {
+                  "GroupId": "sg-shop-web"
+                }
+              ]
+            },
+            {
+              "FromPort": 22,
+              "IpProtocol": "tcp",
+              "ToPort": 22,
+              "UserIdGroupPairs": [
+                {
+                  "GroupId": "sg-shop-bastion"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "source": "web",
+      "target": "app",
+      "type": "edge"
+    }
+  }
+]

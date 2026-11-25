@@ -1,0 +1,137 @@
+{
+  "account_id": "222222222222",
+  "name": "analytics",
+  "narrative": [
+    "Only the jump host has a public IP; SSH/22 is open to 0.0.0.0/0.",
+    "The worker accepts SSH from the jump security group.",
+    "Redshift accepts 5439 from the jump group AND from the broad 10.10.0.0/16 CIDR, which the worker (10.10.2.20) belongs to.",
+    "The locked RDS only trusts an unused security group, so no path reaches it initially.",
+    "Subtle transit: every 10.10.0.0/16 host (including the locked RDS at 10.10.4.40) is accepted by Redshift, so once the jump can reach the locked RDS it can also pivot onward to Redshift."
+  ],
+  "resources": [
+    {
+      "id": "jump",
+      "name": "analytics-jump",
+      "private_ips": [
+        "10.10.1.10"
+      ],
+      "public_ips": [
+        "54.2.2.2"
+      ],
+      "sg_ids": [
+        "sg-an-jump"
+      ],
+      "type": "ec2"
+    },
+    {
+      "id": "worker",
+      "name": "analytics-worker",
+      "private_ips": [
+        "10.10.2.20"
+      ],
+      "sg_ids": [
+        "sg-an-worker"
+      ],
+      "type": "ec2"
+    },
+    {
+      "id": "rs-bi",
+      "name": "analytics-bi-redshift",
+      "private_ips": [
+        "10.10.3.30"
+      ],
+      "sg_ids": [
+        "sg-an-rs"
+      ],
+      "type": "redshift"
+    },
+    {
+      "id": "db-locked",
+      "name": "analytics-locked-rds",
+      "private_ips": [
+        "10.10.4.40"
+      ],
+      "sg_ids": [
+        "sg-an-locked"
+      ],
+      "type": "rds"
+    }
+  ],
+  "security_groups": [
+    {
+      "GroupId": "sg-an-jump",
+      "GroupName": "analytics-jump",
+      "IpPermissions": [
+        {
+          "FromPort": 22,
+          "IpProtocol": "tcp",
+          "IpRanges": [
+            {
+              "CidrIp": "0.0.0.0/0"
+            }
+          ],
+          "ToPort": 22
+        }
+      ]
+    },
+    {
+      "GroupId": "sg-an-worker",
+      "GroupName": "analytics-worker",
+      "IpPermissions": [
+        {
+          "FromPort": 22,
+          "IpProtocol": "tcp",
+          "ToPort": 22,
+          "UserIdGroupPairs": [
+            {
+              "GroupId": "sg-an-jump"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "GroupId": "sg-an-rs",
+      "GroupName": "analytics-redshift",
+      "IpPermissions": [
+        {
+          "FromPort": 5439,
+          "IpProtocol": "tcp",
+          "ToPort": 5439,
+          "UserIdGroupPairs": [
+            {
+              "GroupId": "sg-an-jump"
+            }
+          ]
+        },
+        {
+          "FromPort": 5439,
+          "IpProtocol": "tcp",
+          "IpRanges": [
+            {
+              "CidrIp": "10.10.0.0/16"
+            }
+          ],
+          "ToPort": 5439
+        }
+      ]
+    },
+    {
+      "GroupId": "sg-an-locked",
+      "GroupName": "analytics-locked-db",
+      "IpPermissions": [
+        {
+          "FromPort": 5432,
+          "IpProtocol": "tcp",
+          "ToPort": 5432,
+          "UserIdGroupPairs": [
+            {
+              "GroupId": "sg-an-ghost"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "title": "Analytics VPC (SG pairs plus a broad private CIDR rule)"
+}

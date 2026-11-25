@@ -1,0 +1,11 @@
+{
+  "LoadBalancers": [
+    {
+      "LoadBalancerName": "elb-partner",
+      "Scheme": "internet-facing",
+      "SecurityGroups": [
+        "sg-p-ELB"
+      ]
+    }
+  ]
+}
